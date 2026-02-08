@@ -359,7 +359,7 @@ void drawGUI() {
       Brain.Screen.printAt(1, 40, "Good luck! Look for any screwdrivers!");
     }
     else if (random_quote == 11) {
-      Brain.Screen.printAt(1, 40, "All aboard! Next stop: off the table.");
+      Brain.Screen.printAt(1, 40, "🖕");
     }
     else if (random_quote == 12) {
       Brain.Screen.printAt(1, 40, "Would you like a push on your back?");

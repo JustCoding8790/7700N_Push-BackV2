@@ -39,18 +39,19 @@ brain Brain;
 
 //MARK: Motors
 // Drivetrain
-/* Motor n */ motor leftF = motor(PORT1, ratio6_1, true);
-/* Motor n */ motor leftM = motor(PORT3, ratio6_1, true);
-/* Motor n */ motor leftR = motor(PORT2, ratio6_1, true);
-/* Motor n */ motor rightF = motor(PORT4, ratio6_1, false);
-/* Motor n */ motor rightM = motor(PORT9, ratio6_1, false);
-/* Motor n */ motor rightR = motor(PORT10, ratio6_1, false);
+/* Left Front */ motor leftF = motor(PORT1, ratio6_1, true);
+/* Left Middle */ motor leftM = motor(PORT3, ratio6_1, true);
+/* Left Rear */ motor leftR = motor(PORT2, ratio6_1, true);
+/* Right Front */ motor rightF = motor(PORT4, ratio6_1, false);
+/* Right Middle */ motor rightM = motor(PORT9, ratio6_1, false);
+/* Right Rear */ motor rightR = motor(PORT10, ratio6_1, false);
 
 // Others
-/* Motor n */ motor intake = motor(PORT7, ratio6_1, false);
-/* Motor n */ motor other = motor(PORT8, ratio6_1, false);
+/* Intake */ motor intake = motor(PORT7, ratio6_1, false);
+/* Top Stage */ motor topStage = motor(PORT8, ratio6_1, false);
 
-//MARK: Others
+//MARK: Penaumatics
+/* Unloader*/ digital_out unloader = digital_out(Brain.ThreeWirePort.A);
 
 // Inertial
 inertial inertialSensor = inertial(PORT12);
@@ -541,8 +542,8 @@ void Display()
 	double rightBackTemp = rightR.temperature(celsius);
   double intakeCurr = intake.current(amp);
 	double intakeTemp = intake.temperature(celsius);
-  double intakeConveyorCurr = other.current(amp);
-  double intakeConveyorTemp = other.temperature(celsius);
+  double intakeConveyorCurr = topStage.current(amp);
+  double intakeConveyorTemp = topStage.temperature(celsius);
 	if (leftF.installed()){
 		MotorDisplay(1, leftFCurr, leftFTemp);
 		Brain.Screen.printAt(300, YOFFSET + 1, "LeftFront");
@@ -592,7 +593,7 @@ void Display()
 		Brain.Screen.printAt(5, YOFFSET + 121, "Intake - DISCONNECTED");
 	}
 
-  if (other.installed()){
+  if (topStage.installed()){
 		MotorDisplay(141, intakeConveyorCurr, intakeConveyorTemp);
 		Brain.Screen.printAt(300, YOFFSET + 141, "IntakeConveyor");
 	} else {
@@ -727,11 +728,11 @@ void usercontrol(void) {
       intake.stop();
     }
     if (Controller1.ButtonR2.pressing()) {
-      other.spin(fwd, 100000, rpm);
+      topStage.spin(fwd, 100000, rpm);
       intake.spin(fwd, 100000, rpm);
     }
     else {
-      other.stop();
+      topStage.stop();
     }
    }
   }

@@ -722,9 +722,13 @@ void usercontrol(void) {
       topStage.spin(fwd, 100000, rpm);
       intake.spin(fwd, 100000, rpm);
     }
+    else if (Controller1.ButtonL1.pressing()) {
+      topStage.spin(fwd, -100000, rpm);
+    }
     else {
       topStage.stop();
     }
+
    }
   }
 }

@@ -676,8 +676,8 @@ void usercontrol(void) {
    setBrakeMode(brake);
    // Drive
    while (1) {
-    if (guiChanged) {
-      if (gui) {
+    if (guiChanged == true) {
+      if (gui == true) {
         drawGUI();
       }
       else {

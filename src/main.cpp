@@ -317,6 +317,68 @@ void drawGUI() {
     Brain.Screen.setFillColor(transparent);
     Brain.Screen.printAt(1, 40, "7700N VRC: Push Back [Auton Menu]");
   }
+  else {
+    // MARK: Commit = Add quote
+    // For tracking commits
+    std::random_device rd;
+    std::mt19937 gen(rd() ^ std::chrono::high_resolution_clock::now().time_since_epoch().count());
+    std::uniform_int_distribution<> distrib(1, 14);
+    int random_quote = distrib(gen);
+    Brain.Screen.setFillColor(transparent);
+    if (!(redoSelection)) {
+      random_quote = 14;  // So we can see the version instantly on the brain
+    }
+    if (random_quote == 1) {
+      Brain.Screen.printAt(1, 40, "Do a barrel roll!");
+    }
+    else if (random_quote == 5) {
+      Brain.Screen.printAt(1, 40, "Good day for a swell battle!");
+    }
+    else if (random_quote == 2) {
+      Brain.Screen.printAt(1, 40, "A great slam and then some!");
+    }
+    else if (random_quote == 3) {
+      Brain.Screen.printAt(1, 40, "A brawl is surely brewing!");
+    }
+    else if (random_quote == 4) {
+      Brain.Screen.printAt(1, 40, "It's all or nothing...");
+    }
+    else if (random_quote == 6) {
+      Brain.Screen.printAt(1, 40, "NGAHHHHHHHHKAERTJUJHFSARTO!");
+    }
+    else if (random_quote == 7){
+      Brain.Screen.printAt(1, 40, "YOU. ARE. NOT. FOLLOWING. THE DRESS CODE!!!");
+    }
+    else if (random_quote == 8) {
+      Brain.Screen.printAt(1, 40, "Here's a real high-class bout!");
+    }
+    else if (random_quote == 9) {
+      Brain.Screen.printAt(1, 40, "This match is getting red hot!");
+    }
+    else if (random_quote == 10) {
+      Brain.Screen.printAt(1, 40, "Good luck! Look for any screwdrivers!");
+    }
+    else if (random_quote == 11) {
+      Brain.Screen.printAt(1, 40, "All aboard! Next stop: off the table.");
+    }
+    else if (random_quote == 12) {
+      Brain.Screen.printAt(1, 40, "Would you like a push on your back?");
+    }
+    else if (random_quote == 13) {
+      Brain.Screen.printAt(1, 40, "So much to do, so little time. - MM");
+    }
+    else if (random_quote == 14) {
+      Brain.Screen.printAt(1, 40, "Tank drive is tanking!");
+    }
+    else {
+      Brain.Screen.printAt(1, 40, "Just you and the clock... and maybe more.");
+    }
+    Brain.Screen.setFillColor(green);
+    Brain.Screen.setPenColor(black);
+    Brain.Screen.drawRectangle(170, 50, 100, 100);
+    Brain.Screen.printAt(175, 75, "WALLOP!");
+    Brain.Screen.printAt(1, 200, "You're up!");
+  }
   
   Brain.Screen.setFont(monoS);
   Brain.Screen.drawCircle(310, 75, 25);

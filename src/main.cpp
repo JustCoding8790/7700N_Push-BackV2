@@ -72,11 +72,11 @@ color dual = color(255, 200, 255);
 //MARK: Functions
 
 
-// Base Auton Funcs
+// Tweakable functions
 bool speedIsLocked = false;
 const double kp = 0.025;
-const double ki = 0.0025; 
-const double turnkp = 0.006; // 0.004 tried, overshooting by 3-4 deg still, 0.006 overshoots by up to 7-8 deg
+const double ki = 0.0025;
+const double turnkp = 0.006;
 const double turnki = 0.0006;
 
 void driveTrainMove(float speed) {
@@ -131,7 +131,7 @@ void drivePct(double lSpeed, double rSpeed, int waitTime) {
 }
 
 
-//MARK:--
+
 //MARK: Auton funcs
 
 void inchDrive(double target, long time) {
@@ -319,7 +319,7 @@ void drawGUI() {
     Brain.Screen.printAt(1, 40, "7700N VRC: Push Back [Auton Menu]");
   }
   else {
-    // MARK: Commit = Add quote
+    // Commit = Add quote
     // For tracking commits
     std::random_device rd;
     std::mt19937 gen(rd() ^ std::chrono::high_resolution_clock::now().time_since_epoch().count());
@@ -465,7 +465,7 @@ void selectAuton() {
   wait(100, msec); // slow it down
   Brain.Screen.setFillColor(black);
 }
-
+//MARK:--
 // MARK: Motor Monitor
 
 double YOFFSET = 20; //offset for the display

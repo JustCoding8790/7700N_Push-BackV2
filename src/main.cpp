@@ -57,7 +57,7 @@ inertial inertialSensor = inertial(PORT12);
 color magenta = color(255, 50, 150);
 color brown = color(150, 100, 0);
 color arcade = color(50, 150, 200);
-color military = color(0, 50, 0);
+color tank = color(0, 50, 0);
 color dual = color(255, 200, 255);
 
 
@@ -340,7 +340,7 @@ void drawGUI() {
     Brain.Screen.printAt(345, 140, "Dual Arcade");
   }
   else {
-    Brain.Screen.setFillColor(military);
+    Brain.Screen.setFillColor(tank);
     Brain.Screen.drawCircle(310, 135, 25);
     Brain.Screen.setFillColor(black);
     Brain.Screen.printAt(345, 140, "Tank Drive");

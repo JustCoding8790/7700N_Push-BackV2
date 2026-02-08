@@ -48,7 +48,7 @@ brain Brain;
 
 // Others
 /* Intake */ motor intake = motor(PORT7, ratio6_1, false);
-/* Top Stage */ motor topStage = motor(PORT8, ratio6_1, false);
+/* Top Stage */ motor topStage = motor(PORT6, ratio6_1, false);
 
 //MARK: Penaumatics
 /* Unloader*/ digital_out unloader = digital_out(Brain.ThreeWirePort.A);
@@ -710,25 +710,29 @@ void usercontrol(void) {
     drivePct(lStick, rStick, 10);
 
     if (Controller1.ButtonR1.pressing()) {
+      // Intake bottom stage
       intake.spin(fwd, 100000, rpm);
     }
     else if (Controller1.ButtonX.pressing()) {
+      // Outtake bottom stage
       intake.spin(fwd, -100000, rpm);
     }
     else {
       intake.stop();
     }
-    if (Controller1.ButtonR2.pressing()) {
-      topStage.spin(fwd, 100000, rpm);
+    if (Controller1.ButtonL1.pressing()) {
+      // Mid goal score
+      topStage.spin(fwd, -300, rpm);
       intake.spin(fwd, 100000, rpm);
     }
-    else if (Controller1.ButtonL1.pressing()) {
-      topStage.spin(fwd, -100000, rpm);
+    else if (Controller1.ButtonR2.pressing()) {
+      // Long goal score
+      topStage.spin(fwd, 300, rpm);
+      intake.spin(fwd, 100000, rpm);
     }
     else {
       topStage.stop();
     }
-
    }
   }
 }

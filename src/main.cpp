@@ -328,6 +328,9 @@ void drawGUI() {
     if (!(redoSelection)) {
       random_quote = 14;  // So we can see the version instantly on the brain
     }
+    if (autonSelected == 0) {
+      Brain.Screen.printAt(1, 40, "TUNING TEST ACTIVATED - SERIOUS MODE = TRUE");
+    }
     if (random_quote == 1) {
       Brain.Screen.printAt(1, 40, "Do a barrel roll!");
     }
@@ -414,7 +417,7 @@ void selectAuton() {
   int y = Brain.Screen.yPosition(); // get the y position of last touch of the screen
 
   // check to see if buttons were pressed
-  if (x >= 20 && x <= 120 && y >= 50 && y <= 150){ // select button pressed
+  if (x >= 20 && x <= 120 && y >= 50 && y <= 150 && selectingAuton){ // select button pressed
     autonSelected++;
     selectPressed = true;
     if (autonSelected > autonMax){

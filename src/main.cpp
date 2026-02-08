@@ -1,7 +1,7 @@
 /*----------------------------------------------------------------------------*/
 /*                                                                            */
 /*    Module:       main.cpp                                                  */
-/*    Author:       jnaor, JustCoding8790                                                     */
+/*    Author:       jnaor                                                     */
 /*    Created:      2/6/2026, 5:40:27 PM                                      */
 /*    Description:  V5 project                                                */
 /*                                                                            */

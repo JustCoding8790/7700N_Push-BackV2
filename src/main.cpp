@@ -18,6 +18,8 @@ using namespace vex;
 int autonSelected = 0;
 int autonMin = 0;
 int autonMax = 8;
+double distMultiplier = 1.0;
+double angleMultiplier = 1.0;
 bool selectPressed = false;
 bool selectingAuton = true;
 bool redoSelection = false;
@@ -134,6 +136,7 @@ void drivePct(double lSpeed, double rSpeed, int waitTime) {
 //MARK: Auton funcs
 
 void inchDrive(double target, long time) {
+  target *= distMultiplier;
   int counter = 0;
   leftM.setPosition(0, rev);
   double currPos = leftM.position(rev) * pi * wheelDiamiter;
@@ -175,38 +178,39 @@ void inchDrive(double target) {
 
 void autonTurn(double targetRotation) {
 // FOR TURINING RIGHT, USE POSITIVE
- int debugCounter = 0;
- inertialSensor.resetRotation();
- inertialSensor.setRotation(0, deg);
- double currRotation = inertialSensor.rotation(deg);
- double startRotation = currRotation;
- double error = targetRotation - currRotation;
- double acc_error = 0;
- double prev_error = 0;
- double speed = error * turnkp;
+  targetRotation *= angleMultiplier;
+  int debugCounter = 0;
+  inertialSensor.resetRotation();
+  inertialSensor.setRotation(0, deg);
+  double currRotation = inertialSensor.rotation(deg);
+  double startRotation = currRotation;
+  double error = targetRotation - currRotation;
+  double acc_error = 0;
+  double prev_error = 0;
+  double speed = error * turnkp;
 
- while (fabs(error) > 2) {
-  currRotation = inertialSensor.rotation(deg);
-  prev_error = error;
-  error = targetRotation - currRotation;
-  if (fabs(error) < 15) {
+  while (fabs(error) > 2) {
+    currRotation = inertialSensor.rotation(deg);
+    prev_error = error;
+    error = targetRotation - currRotation;
+    if (fabs(error) < 15) {
       acc_error = acc_error + error;
     }
     if ((error > 0 && prev_error < 0) || (error < 0 && prev_error > 0)) {
       acc_error = 0;
     }
-  speed = error * turnkp + acc_error * turnki;
-  driveVolts(speed, -speed, 10);
-  if (debugCounter++ % 10 == 0){
-    printf("autonTurn %0.2f error: %0.2f [%0.2f] kp: %0.2f ki: %0.2f speed: %0.2f\n", inertialSensor.rotation(deg), targetRotation - inertialSensor.rotation(deg), error, turnkp * error, turnki * acc_error, speed);
+    speed = error * turnkp + acc_error * turnki;
+    driveVolts(speed, -speed, 10);
+    if (debugCounter++ % 10 == 0){
+      printf("autonTurn %0.2f error: %0.2f [%0.2f] kp: %0.2f ki: %0.2f speed: %0.2f\n", inertialSensor.rotation(deg), targetRotation - inertialSensor.rotation(deg), error, turnkp * error, turnki * acc_error, speed);
+    }
   }
- }
   driveTrainStop();
   printf("autonTurn finished! autonTurn: %0.2f currRotation: %0.2f speed: %0.2f\n", targetRotation, currRotation, inertialSensor.rotation(deg) - startRotation, speed);
- wait(500, msec);
- currRotation = inertialSensor.rotation(deg);
- error = targetRotation - currRotation;
- printf("currRotation: %0.2f, error: %0.2f\n", currRotation, error);
+  wait(500, msec);
+  currRotation = inertialSensor.rotation(deg);
+  error = targetRotation - currRotation;
+  printf("currRotation: %0.2f, error: %0.2f\n", currRotation, error);
 }
 
 void drawGUI() {
@@ -240,36 +244,36 @@ void drawGUI() {
     Brain.Screen.drawRectangle(20, 50, 100, 100);
     Brain.Screen.drawCircle(310, 75, 25);
     Brain.Screen.setPenColor(white);
-    Brain.Screen.printAt(25, 75, "x.x");
-    Brain.Screen.printAt(25, 100, "x.x");
-    Brain.Screen.printAt(25, 125, "(+x)");
+    Brain.Screen.printAt(25, 75, "Left");
+    Brain.Screen.printAt(25, 100, "Match");
+    Brain.Screen.printAt(25, 125, "(+?)");
   }
   else if (autonSelected == 2) {
     Brain.Screen.setFillColor(blue);
     Brain.Screen.drawRectangle(20, 50, 100, 100);
     Brain.Screen.drawCircle(310, 75, 25);
     Brain.Screen.setPenColor(white);
-    Brain.Screen.printAt(25, 75, "x.x");
-    Brain.Screen.printAt(25, 100, "x.x");
-    Brain.Screen.printAt(25, 125, "(+x)");
+    Brain.Screen.printAt(25, 75, "Right");
+    Brain.Screen.printAt(25, 100, "Match");
+    Brain.Screen.printAt(25, 125, "(+?)");
   }
   else if (autonSelected == 3) {
     Brain.Screen.setFillColor(orange);
     Brain.Screen.drawRectangle(20, 50, 100, 100);
     Brain.Screen.drawCircle(310, 75, 25);
     Brain.Screen.setPenColor(white);
-    Brain.Screen.printAt(25, 75, "x.x");
-    Brain.Screen.printAt(25, 100, "x.x");
-    Brain.Screen.printAt(25, 125, "(+x)");
+    Brain.Screen.printAt(25, 75, "Simple");
+    Brain.Screen.printAt(25, 100, "Skills");
+    Brain.Screen.printAt(25, 125, "(+?)");
   }
   else if (autonSelected == 4) {
     Brain.Screen.setFillColor(purple);
     Brain.Screen.drawRectangle(20, 50, 100, 100);
     Brain.Screen.drawCircle(310, 75, 25);
     Brain.Screen.setPenColor(white);
-    Brain.Screen.printAt(25, 75, "x.x");
-    Brain.Screen.printAt(25, 100, "x.x");
-    Brain.Screen.printAt(25, 125, "(+x)");
+    Brain.Screen.printAt(25, 75, "Regular");
+    Brain.Screen.printAt(25, 100, "Skills");
+    Brain.Screen.printAt(25, 125, "(+?)");
   }
   else if (autonSelected == 5) {
     Brain.Screen.setFillColor(yellow);

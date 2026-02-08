@@ -1,7 +1,7 @@
 /*----------------------------------------------------------------------------*/
 /*                                                                            */
 /*    Module:       main.cpp                                                  */
-/*    Author:       jnaor                                                     */
+/*    Author:       jnaor, JustCoding8790                                                     */
 /*    Created:      2/6/2026, 5:40:27 PM                                      */
 /*    Description:  V5 project                                                */
 /*                                                                            */
@@ -655,13 +655,20 @@ void usercontrol(void) {
     if (Controller1.ButtonR1.pressing()) {
       intake.spin(fwd, 100000, rpm);
     }
-    else if (Controller1.ButtonR2.pressing()) {
+    else if (Controller1.ButtonX.pressing()) {
       intake.spin(fwd, -100000, rpm);
     }
     else {
       intake.stop();
     }
-  }
+    if (Controller1.ButtonR2.pressing()) {
+      other.spin(fwd, 100000, rpm);
+      intake.spin(fwd, 100000, rpm);
+    }
+    else {
+      other.stop();
+    }
+   }
   }
 }
 

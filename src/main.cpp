@@ -27,7 +27,16 @@ int arcadeMode = 0;
 double wheelDiamiter = 3.25;
 double gearRatioExternal = 0.75;
 double pi = 3.14;
-
+bool speedIsLocked = false;
+const double kp = 0.025;
+const double ki = 0.0025;
+const double turnkp = 0.006;
+const double turnki = 0.0006;
+color magenta = color(255, 50, 150);
+color brown = color(150, 100, 0);
+color arcade = color(50, 150, 200);
+color tank = color(0, 50, 0);
+color dual = color(255, 200, 255);
 
 // A global instance of competition
 competition Competition;
@@ -54,21 +63,9 @@ brain Brain;
 /* Unloader*/ digital_out unloader = digital_out(Brain.ThreeWirePort.A);
 
 // Inertial
-inertial inertialSensor = inertial(PORT12);
-color magenta = color(255, 50, 150);
-color brown = color(150, 100, 0);
-color arcade = color(50, 150, 200);
-color tank = color(0, 50, 0);
-color dual = color(255, 200, 255);
+inertial inertialSensor = inertial(PORT21);
+
 //MARK: Functions
-
-
-// Tweakable functions
-bool speedIsLocked = false;
-const double kp = 0.025;
-const double ki = 0.0025;
-const double turnkp = 0.006;
-const double turnki = 0.0006;
 
 void driveTrainMove(float speed) {
   leftF.spin(fwd, speed, rpm);
@@ -722,7 +719,7 @@ void usercontrol(void) {
     }
     if (Controller1.ButtonL1.pressing()) {
       // Mid goal score
-      topStage.spin(fwd, -300, rpm);
+      topStage.spin(fwd, -100000, rpm);
       intake.spin(fwd, 100000, rpm);
     }
     else if (Controller1.ButtonR2.pressing()) {

@@ -60,15 +60,6 @@ color brown = color(150, 100, 0);
 color arcade = color(50, 150, 200);
 color tank = color(0, 50, 0);
 color dual = color(255, 200, 255);
-
-
-
-
-
-
-
-
-
 //MARK: Functions
 
 

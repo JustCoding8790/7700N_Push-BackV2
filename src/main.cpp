@@ -449,7 +449,7 @@ void MotorDisplay(double y, double curr, double temp)
 		Brain.Screen.setFillColor(purple);
     while (true) {
       Controller1.rumble("-");
-      Controller1.Screen.print("MOTORS OVERHEATING: WHY ARE YOU DRIVING???");
+      Controller1.Screen.print("YOUR MOTORS ARE SPONTANIOUSLY COMBUSTING: SHUT DOWN YOUR ROBOT IMMEDIATELY");
       wait(500, msec);
     }
 		/*Brain.Screen.drawRectangle(275, YOFFSET + y - 15, 15, 15);

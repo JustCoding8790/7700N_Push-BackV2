@@ -50,7 +50,7 @@ brain Brain;
 
 // Others
 /* Motor n */ motor intake = motor(PORT7, ratio6_1, false);
-/* Motor n */ motor other = motor(PORT8, ratio6_1, false);
+/* Motor n */ motor other = motor(PORT6, ratio6_1, false);
 
 //MARK: Others
 
@@ -627,38 +627,83 @@ void autonomous(void) {
       printf("Results - Rotation: %0.2f", inertialSensor.rotation(deg));
       break;
 
-//MARK: xx.xx
-case 1:
-break;
+    //MARK: xx.xx
+    case 1:
+      break;
 
-//MARK: xx.xx
-case 2:
-break;
+    //MARK: xx.xx
+    case 2:
+      break;
 
-//MARK: xx.xx
-case 3:
-break;
+    //MARK: Simple Skills
 
-//MARK: xx.xx
-case 4:
-break;
 
-//MARK: xx.xx
-case 5:
-break;
 
-//MARK: xx.xx
-case 6:
-break;
 
-//MARK: xx.xx
-case 7:
-break;
 
-//MARK: xx.xx
-case 8:
-break;
-}
+
+    case 3:
+      break;
+
+    //MARK: Regular Skills
+    case 4:
+      inchDrive(31);
+      autonTurn(90);
+      inchDrive(14);
+      //Unload, customize later
+      wait(3, sec);
+      autonTurn(135);
+      inchDrive(36);
+      autonTurn(45);
+      inchDrive(10);
+      autonTurn(45);
+      inchDrive(36);
+      autonTurn(45);
+      inchDrive(-17);
+      //Score, customize later
+      wait(2, sec);
+      inchDrive(5);
+      autonTurn(90);
+      inchDrive(72);
+      autonTurn(90);
+      inchDrive(20);
+      autonTurn(180);
+      inchDrive(10);
+      autonTurn(45);
+      inchDrive(33.5);
+      autonTurn(-45);
+      inchDrive(18);
+      //Unload, customize later
+      wait(3, sec);
+      inchDrive(-44);
+      // Score, customize later
+      wait(2, sec);
+      inchDrive(5);
+      autonTurn(-135);
+      inchDrive(-34);
+      inchDrive(36);
+      autonTurn(90);
+      inchDrive(15);
+      autonTurn(-90);
+      inchDrive(36);
+      break;
+
+    //MARK: xx.xx
+    case 5:
+      break;
+
+    //MARK: xx.xx
+    case 6:
+      break;
+
+    //MARK: xx.xx
+    case 7:
+      break;
+
+    //MARK: xx.xx
+    case 8:
+      break;
+  }
 }
 
 /*---------------------------------------------------------------------------*/
@@ -731,7 +776,7 @@ void usercontrol(void) {
       intake.stop();
     }
     if (Controller1.ButtonR2.pressing()) {
-      other.spin(fwd, 100000, rpm);
+      other.spin(fwd, 300, rpm);
       intake.spin(fwd, 100000, rpm);
     }
     else {

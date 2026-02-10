@@ -61,6 +61,7 @@ brain Brain;
 
 //MARK: Penaumatics
 /* Unloader*/ digital_out unloader = digital_out(Brain.ThreeWirePort.A);
+/* Descorer */ digital_out descorer = digital_out(Brain.ThreeWirePort.B);
 
 // Inertial
 inertial inertialSensor = inertial(PORT21);
@@ -93,9 +94,7 @@ void setBrakeMode(brakeType mode) {
   rightM.setStopping(mode);
   rightR.setStopping(mode);
 }
-
 //MARK: Driver Funcs
-
 void driveVolts(double lSpeed, double rSpeed, int waitTime) {
   lSpeed = lSpeed * 12.00;
   rSpeed = rSpeed * 12.00;
@@ -117,9 +116,6 @@ void drivePct(double lSpeed, double rSpeed, int waitTime) {
   rightR.spin(fwd, rSpeed, pct);
   wait(waitTime, msec);
 }
-
-
-
 //MARK: Auton funcs
 
 void inchDrive(double target, long time) {
@@ -204,7 +200,6 @@ void drawGUI() {
   Brain.Screen.setFont(monoM);
   Brain.Screen.printAt(1, 200, "AUTON = %d, ", autonSelected);
   Brain.Screen.setFillColor(red);
-  //Brain.Screen.drawCircle(310, 75, 25);
   if (!(selectPressed)) {
     Brain.Screen.setFillColor(white);
     Brain.Screen.drawRectangle(20, 50, 100, 100);
@@ -377,10 +372,6 @@ void drawGUI() {
   Brain.Screen.setFillColor(black);
   Brain.Screen.setPenColor(white);
   Brain.Screen.printAt(345, 80, "Redo Selection");
-  /*Brain.Screen.setFillColor(white);
-  Brain.Screen.drawCircle(310, 135, 20);
-  Brain.Screen.setFillColor(black);
-  Brain.Screen.printAt(345, 140, "Check Inertial");*/
   if (arcadeMode == 1){
     Brain.Screen.setFillColor(arcade);
     Brain.Screen.drawCircle(310, 135, 25);
@@ -422,7 +413,6 @@ void selectAuton() {
     Brain.Screen.setFillColor(black);
     Brain.Screen.printAt(345, 80, "Redo");
     Brain.Screen.printAt(290, 130, "Selection");
-    //Brain.Screen.printAt(1, 200, "Auton  =  %d   AND GO!           ", autonSelected);
     drawGUI();
   }
   else if (x >= 285 && x <= 335 && y >= 50 && y <= 100) {

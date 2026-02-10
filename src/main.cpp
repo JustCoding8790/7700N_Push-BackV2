@@ -1,9 +1,9 @@
 /*----------------------------------------------------------------------------*/
 /*                                                                            */
 /*    Module:       main.cpp                                                  */
-/*    Author:       jnaor, JustCoding8                                                    */
+/*    Author:       jnaor, JustCoding8                                        */
 /*    Created:      2/6/2026, 5:40:27 PM                                      */
-/*    Description:  V5 project                                                */
+/*    Description:  Ur mom is gay                                             */
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
 
@@ -646,15 +646,7 @@ break;
 }
 }
 
-/*---------------------------------------------------------------------------*/
-/*                                                                           */
-/*                              User Control Task                            */
-/*                                                                           */
-/*  This task is used to control your robot during the user control phase of */
-/*  a VEX Competition.                                                       */
-/*                                                                           */
-/*  You must modify the code to add your own robot specific commands here.   */
-/*---------------------------------------------------------------------------*/
+
 //MARK:--
 //MARK: Usercontrol
 void usercontrol(void) {

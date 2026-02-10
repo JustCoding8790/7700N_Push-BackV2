@@ -719,6 +719,12 @@ void usercontrol(void) {
     if (Controller1.ButtonUp.pressing()) {
       scraper.set(!scraper.value());
     }
+     if (Controller1.ButtonB.pressing()) {
+      gui = !(gui);
+      Brain.Screen.clearScreen();
+      guiChanged = true;
+      wait(700, msec);
+    }
   }
  }
 }

@@ -342,7 +342,7 @@ void drawGUI() {
       Brain.Screen.printAt(1, 40, "YOU. ARE. NOT. FOLLOWING. THE DRESS CODE!!!");
     }
     else if (random_quote == 8) {
-      Brain.Screen.printAt(1, 40, "Here's a real high-class bout!");
+      Brain.Screen.printAt(1, 40, "Your mom is gay!");
     }
     else if (random_quote == 9) {
       Brain.Screen.printAt(1, 40, "This match is getting red hot!");

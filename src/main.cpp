@@ -60,7 +60,7 @@ brain Brain;
 /* Top Stage */ motor topStage = motor(PORT6, ratio6_1, false);
 
 //MARK: Penaumatics
-/* Unloader*/ digital_out unloader = digital_out(Brain.ThreeWirePort.A);
+/* Unloader*/ digital_out scraper = digital_out(Brain.ThreeWirePort.A);
 /* Descorer */ digital_out descorer = digital_out(Brain.ThreeWirePort.B);
 
 // Inertial
@@ -713,8 +713,11 @@ void usercontrol(void) {
       topStage.stop();
     }
     if (Controller1.ButtonL2.pressing()) {
-      unloader.set(!unloader.value());
+      descorer.set(!descorer.value());
       wait(10, msec);
+    }
+    if (Controller1.ButtonUp.pressing()) {
+      scraper.set(!scraper.value());
     }
   }
  }

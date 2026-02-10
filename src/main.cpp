@@ -722,7 +722,10 @@ void usercontrol(void) {
     else {
       topStage.stop();
     }
-   }
+    if (Controller1.ButtonL2.pressing()) {
+      unloader.set(!unloader.value());
+      wait(10, msec);
+    }
   }
 }
 

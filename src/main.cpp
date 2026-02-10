@@ -195,7 +195,7 @@ void autonTurn(double targetRotation) {
 }
 
 void drawGUI() {
-  // Draws 2 buttons to be used for selecting auto
+  // Draws buttons to be used for selecting auto
   Brain.Screen.clearScreen();
   Brain.Screen.setFont(monoM);
   Brain.Screen.printAt(1, 200, "AUTON = %d, ", autonSelected);
@@ -302,8 +302,6 @@ void drawGUI() {
     Brain.Screen.printAt(1, 40, "7700N VRC: Push Back [Auton Menu]");
   }
   else {
-    // Commit = Add quote
-    // For tracking commits
     std::random_device rd;
     std::mt19937 gen(rd() ^ std::chrono::high_resolution_clock::now().time_since_epoch().count());
     std::uniform_int_distribution<> distrib(1, 14);
@@ -440,14 +438,13 @@ void selectAuton() {
     drawGUI();
   }
 
-  wait(100, msec); // slow it down
+  wait(100, msec); //Prevent overselection from one press
   Brain.Screen.setFillColor(black);
 }
 //MARK:--
 // MARK: Motor Monitor
 
-double YOFFSET = 20; //offset for the display
-//Writes a line for the diagnostics of a motor on the Brain
+double YOFFSET = 20; //offset for displaying info on the brain so it doesnt clip out of screen
 void MotorDisplay(double y, double curr, double temp)
 {
 	Brain.Screen.setFillColor(transparent);
@@ -464,7 +461,6 @@ void MotorDisplay(double y, double curr, double temp)
 		Brain.Screen.drawRectangle(140, YOFFSET + y - 15, 15, 15);
 	}
 
-	
 	Brain.Screen.setFillColor(transparent);
 	Brain.Screen.printAt(160, YOFFSET + y, "Temp: %.1fC", temp);
 	
@@ -475,12 +471,10 @@ void MotorDisplay(double y, double curr, double temp)
     Brain.Screen.setFillColor(green);
   }
   else if(temp < 45 && temp  >= 40){
-    // ^^ AND gate ^^ (if 1 & 2 are true, true; if 1 or 2 is false, false)
 		Brain.Screen.setFillColor(yellow);
     Controller1.rumble(".");
   }
   else if(temp <= 50 && temp  >= 45){
-    // ^^ AND gate ^^ (if 1 & 2 are true, true; if 1 or 2 is false, false)
 		Brain.Screen.setFillColor(orange);
     Controller1.rumble("-");
 	}
@@ -496,11 +490,8 @@ void MotorDisplay(double y, double curr, double temp)
       Controller1.Screen.print("YOUR MOTORS ARE SPONTANIOUSLY COMBUSTING: SHUT DOWN YOUR ROBOT IMMEDIATELY");
       wait(500, msec);
     }
-		/*Brain.Screen.drawRectangle(275, YOFFSET + y - 15, 15, 15);
-		Brain.Screen.setFillColor(transparent);*/
 	}
 }
-
 
 // Displays information on the brain
 void Display()

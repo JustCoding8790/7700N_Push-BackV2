@@ -3,7 +3,7 @@
 /*    Module:       main.cpp                                                  */
 /*    Author:       jnaor, JustCoding8                                        */
 /*    Created:      2/6/2026, 5:40:27 PM                                      */
-/*    Description:  Ur mom is gay                                             */
+/*    Description:  7700N Code, V2, Github, Mega Edition,                     */
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
 
@@ -251,9 +251,9 @@ void drawGUI() {
     Brain.Screen.drawRectangle(20, 50, 100, 100);
     Brain.Screen.drawCircle(310, 75, 25);
     Brain.Screen.setPenColor(white);
-    Brain.Screen.printAt(25, 75, "x.x");
-    Brain.Screen.printAt(25, 100, "x.x");
-    Brain.Screen.printAt(25, 125, "(+x)");
+    Brain.Screen.printAt(25, 75, "Regular");
+    Brain.Screen.printAt(25, 100, "Skills");
+    Brain.Screen.printAt(25, 125, "(+?)");
   }
   else if (autonSelected == 5) {
     Brain.Screen.setFillColor(yellow);
@@ -335,7 +335,7 @@ void drawGUI() {
       Brain.Screen.printAt(1, 40, "YOU. ARE. NOT. FOLLOWING. THE DRESS CODE!!!");
     }
     else if (random_quote == 8) {
-      Brain.Screen.printAt(1, 40, "Your mom is gay!");
+      Brain.Screen.printAt(1, 40, "...Wait, what was my line again?");
     }
     else if (random_quote == 9) {
       Brain.Screen.printAt(1, 40, "This match is getting red hot!");
@@ -413,7 +413,7 @@ void selectAuton() {
     Brain.Screen.printAt(290, 130, "Selection");
     drawGUI();
   }
-  else if (x >= 285 && x <= 335 && y >= 50 && y <= 100) {
+  else if (x >= 285 && x <= 335 && y >= 50 && y <= 100 && !(selectingAuton)) {
     selectingAuton = true; // UNDO button pressed
     Brain.Screen.setFillColor(black);
     Brain.Screen.setPenColor(white);
@@ -511,8 +511,8 @@ void Display()
 	double rightBackTemp = rightR.temperature(celsius);
   double intakeCurr = intake.current(amp);
 	double intakeTemp = intake.temperature(celsius);
-  double intakeConveyorCurr = topStage.current(amp);
-  double intakeConveyorTemp = topStage.temperature(celsius);
+  double topStageCurr = topStage.current(amp);
+  double topStageTemp = topStage.temperature(celsius);
 	if (leftF.installed()){
 		MotorDisplay(1, leftFCurr, leftFTemp);
 		Brain.Screen.printAt(300, YOFFSET + 1, "LeftFront");
@@ -563,10 +563,10 @@ void Display()
 	}
 
   if (topStage.installed()){
-		MotorDisplay(141, intakeConveyorCurr, intakeConveyorTemp);
-		Brain.Screen.printAt(300, YOFFSET + 141, "IntakeConveyor");
+		MotorDisplay(141, topStageCurr, topStageTemp);
+		Brain.Screen.printAt(300, YOFFSET + 141, "TopStage");
 	} else {
-		Brain.Screen.printAt(5, YOFFSET + 141, "IntakeConveyor - DISCONNECTED");
+		Brain.Screen.printAt(5, YOFFSET + 141, "Topstage - DISCONNECTED");
 	}
 }
 
@@ -593,38 +593,77 @@ void autonomous(void) {
       printf("Results - Rotation: %0.2f", inertialSensor.rotation(deg));
       break;
 
-//MARK: xx.xx
-case 1:
-break;
+    //MARK: xx.xx
+    case 1:
+      break;
 
-//MARK: xx.xx
-case 2:
-break;
+    //MARK: xx.xx
+    case 2:
+      break;
 
-//MARK: xx.xx
-case 3:
-break;
+    //MARK: xx.xx
+    case 3:
+      break;
 
-//MARK: xx.xx
-case 4:
-break;
+    //MARK: Regular Skills
+    case 4:
+      inchDrive(31);
+      autonTurn(90);
+      inchDrive(14);
+      //Unload, customize later
+      wait(3, sec);
+      autonTurn(135);
+      inchDrive(36);
+      autonTurn(45);
+      inchDrive(10);
+      autonTurn(45);
+      inchDrive(36);
+      autonTurn(45);
+      inchDrive(-17);
+      //Score, customize later
+      wait(2, sec);
+      inchDrive(5);
+      autonTurn(90);
+      inchDrive(72);
+      autonTurn(90);
+      inchDrive(20);
+      autonTurn(180);
+      inchDrive(10);
+      autonTurn(45);
+      inchDrive(33.5);
+      autonTurn(-45);
+      inchDrive(18);
+      //Unload, customize later
+      wait(3, sec);
+      inchDrive(-44);
+      // Score, customize later
+      wait(2, sec);
+      inchDrive(5);
+      autonTurn(-135);
+      inchDrive(-34);
+      inchDrive(36);
+      autonTurn(90);
+      inchDrive(15);
+      autonTurn(-90);
+      inchDrive(36);
+    break;
 
-//MARK: xx.xx
-case 5:
-break;
+    //MARK: xx.xx
+    case 5:
+      break;
 
-//MARK: xx.xx
-case 6:
-break;
+    //MARK: xx.xx
+    case 6:
+      break;
 
-//MARK: xx.xx
-case 7:
-break;
+    //MARK: xx.xx
+    case 7:
+      break;
 
-//MARK: xx.xx
-case 8:
-break;
-}
+    //MARK: xx.xx
+    case 8:
+      break;
+  }
 }
 
 
@@ -693,7 +732,7 @@ void usercontrol(void) {
     if (Controller1.ButtonL1.pressing()) {
       // Mid goal score
       topStage.spin(fwd, -100000, rpm);
-      intake.spin(fwd, 250, rpm);
+      intake.spin(fwd, 1000, rpm);
     }
     else if (Controller1.ButtonR2.pressing()) {
       // Long goal score

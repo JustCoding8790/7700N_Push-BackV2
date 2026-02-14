@@ -744,10 +744,11 @@ void usercontrol(void) {
     }
     if (Controller1.ButtonL2.pressing()) {
       descorer.set(!descorer.value());
-      wait(10, msec);
+      wait(300, msec);
     }
     if (Controller1.ButtonUp.pressing()) {
       scraper.set(!scraper.value());
+      wait(300, msec);
     }
      if (Controller1.ButtonB.pressing()) {
       gui = !(gui);

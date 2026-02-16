@@ -30,8 +30,10 @@ double pi = 3.14;
 bool speedIsLocked = false;
 const double kp = 0.025;
 const double ki = 0.0025;
+const double kd = 0;
 const double turnkp = 0.006;
 const double turnki = 0.0006;
+const double turnkd = 0;
 color magenta = color(255, 50, 150);
 color brown = color(150, 100, 0);
 color arcade = color(50, 150, 200);
@@ -140,7 +142,7 @@ void inchDrive(double target, long time) {
     if ((error > 0 && prev_error < 0) || (error < 0 && prev_error > 0)) {
       acc_error = 0;
     }
-    speed = error * kp + acc_error * ki;
+    speed = error * kp + acc_error * ki + (error - prev_error) * kd;
     if(counter++ % 10 == 0){
     printf("rightFrontpos: %0.2f, currPos: %0.2f, error: %0.2f, kp: %0.2f, ki: %0.2f, speed: %0.2f\n", leftM.position(rev), currPos, error, kp * error, ki * acc_error, speed);
     }
@@ -148,7 +150,6 @@ void inchDrive(double target, long time) {
   }
   printf("currPos: %0.2f\n", currPos);
   driveTrainStop();
-  wait(250, msec);
   currPos = leftM.position(rev) * pi * wheelDiamiter;
   printf("currPos: %0.2f\n", currPos);
 
@@ -158,12 +159,13 @@ void inchDrive(double target) {
   inchDrive(target, 5000);
 }
 
-void autonTurn(double targetRotation) {
+void autonTurn(double angle) {
 // FOR TURINING RIGHT, USE POSITIVE
  int debugCounter = 0;
- inertialSensor.resetRotation();
- inertialSensor.setRotation(0, deg);
+ /*inertialSensor.resetRotation();
+ inertialSensor.setRotation(0, deg);*/
  double currRotation = inertialSensor.rotation(deg);
+ double targetRotation = angle + currRotation;
  double startRotation = currRotation;
  double error = targetRotation - currRotation;
  double acc_error = 0;
@@ -180,18 +182,29 @@ void autonTurn(double targetRotation) {
     if ((error > 0 && prev_error < 0) || (error < 0 && prev_error > 0)) {
       acc_error = 0;
     }
-  speed = error * turnkp + acc_error * turnki;
+  speed = error * turnkp + acc_error * turnki + (error - prev_error) * turnkd;
   driveVolts(speed, -speed, 10);
   if (debugCounter++ % 10 == 0){
     printf("autonTurn %0.2f error: %0.2f [%0.2f] kp: %0.2f ki: %0.2f speed: %0.2f\n", inertialSensor.rotation(deg), targetRotation - inertialSensor.rotation(deg), error, turnkp * error, turnki * acc_error, speed);
   }
  }
   driveTrainStop();
-  printf("autonTurn finished! autonTurn: %0.2f currRotation: %0.2f speed: %0.2f\n", targetRotation, currRotation, inertialSensor.rotation(deg) - startRotation, speed);
+  printf("autonTurn finished! autonTurn: %0.2f currRotation: %0.2f speed: %0.2f\n", targetRotation, currRotation, speed);
  wait(500, msec);
  currRotation = inertialSensor.rotation(deg);
  error = targetRotation - currRotation;
  printf("currRotation: %0.2f, error: %0.2f\n", currRotation, error);
+}
+
+void turnHeading(double heading) {
+  double angle = heading - inertialSensor.heading(deg);
+  if (angle <= -180) {
+    angle += 360;
+  }
+  else if (angle > 180) {
+    angle -= 360;
+  }
+  autonTurn(angle);
 }
 
 void drawGUI() {
@@ -224,17 +237,17 @@ void drawGUI() {
     Brain.Screen.drawRectangle(20, 50, 100, 100);
     Brain.Screen.drawCircle(310, 75, 25);
     Brain.Screen.setPenColor(white);
-    Brain.Screen.printAt(25, 75, "x.x");
-    Brain.Screen.printAt(25, 100, "x.x");
-    Brain.Screen.printAt(25, 125, "(+x)");
+    Brain.Screen.printAt(25, 75, "Left");
+    Brain.Screen.printAt(25, 100, "Match");
+    Brain.Screen.printAt(25, 125, "(+20)");
   }
   else if (autonSelected == 2) {
     Brain.Screen.setFillColor(blue);
     Brain.Screen.drawRectangle(20, 50, 100, 100);
     Brain.Screen.drawCircle(310, 75, 25);
     Brain.Screen.setPenColor(white);
-    Brain.Screen.printAt(25, 75, "x.x");
-    Brain.Screen.printAt(25, 100, "x.x");
+    Brain.Screen.printAt(25, 75, "Right");
+    Brain.Screen.printAt(25, 100, "Match");
     Brain.Screen.printAt(25, 125, "(+x)");
   }
   else if (autonSelected == 3) {
@@ -581,18 +594,21 @@ void pre_auton(void) {
 
 void autonomous(void) {
   switch (autonSelected) {
-    case 0:
+    case 0: {
       // Testing Auton
-      printf("GO! - Position: %0.2f", leftM.position(rev));
+      long startTime = vex::timer::system();
+      printf("GO! - Position: %0.2f\n", leftM.position(rev));
       inchDrive(20);
+      long totalTime = vex::timer::system() - startTime;
       wait(2, sec);
-      printf("Results - Position: %0.2f", leftM.position(rev));
-      printf("GO! - Rotation: %0.2f", inertialSensor.rotation(deg));
-      autonTurn(90);
-      wait(2, sec);
-      printf("Results - Rotation: %0.2f", inertialSensor.rotation(deg));
-      break;
+      printf("Results - Position: %0.2f\nTime: %lu\n", leftM.position(rev) * pi * wheelDiamiter, totalTime);
 
+      /*printf("GO! - Rotation: %0.2f", inertialSensor.rotation(deg));
+      turnHeading(90);
+      wait(2, sec);
+      printf("Results - Rotation: %0.2f", inertialSensor.rotation(deg));*/
+      break;
+  }
     //MARK: xx.xx
     case 1:
       break;
@@ -608,30 +624,30 @@ void autonomous(void) {
     //MARK: Regular Skills
     case 4:
       inchDrive(31);
-      autonTurn(90);
+      turnHeading(90);
       inchDrive(14);
       //Unload, customize later
       wait(3, sec);
-      autonTurn(135);
+      turnHeading(225);
       inchDrive(36);
-      autonTurn(45);
+      turnHeading(270);
       inchDrive(10);
-      autonTurn(45);
+      turnHeading(315);
       inchDrive(36);
-      autonTurn(45);
+      turnHeading(0);
       inchDrive(-17);
       //Score, customize later
       wait(2, sec);
       inchDrive(5);
-      autonTurn(90);
+      turnHeading(90);
       inchDrive(72);
-      autonTurn(90);
+      turnHeading(180);
       inchDrive(20);
-      autonTurn(180);
+      turnHeading(0);
       inchDrive(10);
-      autonTurn(45);
+      turnHeading(45);
       inchDrive(33.5);
-      autonTurn(-45);
+      turnHeading(0);
       inchDrive(18);
       //Unload, customize later
       wait(3, sec);
@@ -639,12 +655,12 @@ void autonomous(void) {
       // Score, customize later
       wait(2, sec);
       inchDrive(5);
-      autonTurn(-135);
+      turnHeading(-135);
       inchDrive(-34);
       inchDrive(36);
-      autonTurn(90);
+      turnHeading(-45);
       inchDrive(15);
-      autonTurn(-90);
+      turnHeading(-135);
       inchDrive(36);
     break;
 

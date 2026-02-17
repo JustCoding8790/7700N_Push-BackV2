@@ -13,10 +13,12 @@
 #include <iostream>
 #include <random>
 #include <chrono>
+#include <cmath>
 
 // Essentials
 using namespace vex;
-int autonSelected = 0;
+// auton selector
+int autonSelected = 1;
 int autonMin = 0;
 int autonMax = 8;
 bool selectPressed = false;
@@ -25,18 +27,20 @@ bool redoSelection = false;
 bool gui = true;
 bool guiChanged = true;
 int arcadeMode = 0;
+// auton
 double wheelDiamiter = 3.25;
 double gearRatioExternal = 0.75;
-double pi = 3.14;
+double pi = 3.141592653589793238;
 bool speedIsLocked = false;
 const double kp = 0.025;
-const double ki = 0.0025;
-const double kd = 0;
+const double ki = 0.00275;
+const double kd = 0.0025;
 const double turnkp = 0.006;
-const double turnki = 0.0006;
-const double turnkd = 0;
-double x_coor = 0;
-double y_coor = 0;
+const double turnki = 0.0003;
+const double turnkd = 0.0003;
+// coord tracking
+double x_coord = 0;
+double y_coord = 0;
 color magenta = color(255, 50, 150);
 color brown = color(150, 100, 0);
 color arcade = color(50, 150, 200);
@@ -139,6 +143,12 @@ y = x tan heading
 */
 
 void inchDrive(double target, long time) {
+  // Convert degrees to radians
+  double i_heading = inertialSensor.heading();
+  double i_radians = i_heading * pi / 180.0;
+  double x_change = std::sqrt(target) / std::tan(i_radians);
+  x_coord += x_change;
+  y_coord += x_change * std::tan(i_radians);
   int counter = 0;
   leftM.setPosition(0, rev);
   double currPos = leftM.position(rev) * pi * wheelDiamiter;
@@ -147,7 +157,7 @@ void inchDrive(double target, long time) {
   double prev_error = 0;
   double speed = error * kp;
   long endTime = vex::timer::system() + time;
-  while (fabs(error) > 0.5) {
+  while (fabs(error) > 0.2) {
     if (vex::timer::system() > endTime) {
       break;
     }
@@ -615,21 +625,33 @@ void autonomous(void) {
   switch (autonSelected) {
     case 0: {
       // Testing Auton
+      printf("GO! - Rotation: %0.2f", inertialSensor.rotation(deg));
+      turnHeading(90);
+      wait(2, sec);
+      printf("Results - Rotation: %0.2f", inertialSensor.rotation(deg));
       long startTime = vex::timer::system();
       printf("GO! - Position: %0.2f\n", leftM.position(rev));
       inchDrive(20);
       long totalTime = vex::timer::system() - startTime;
       wait(2, sec);
       printf("Results - Position: %0.2f\nTime: %lu\n", leftM.position(rev) * pi * wheelDiamiter, totalTime);
-
-      /*printf("GO! - Rotation: %0.2f", inertialSensor.rotation(deg));
-      turnHeading(90);
-      wait(2, sec);
-      printf("Results - Rotation: %0.2f", inertialSensor.rotation(deg));*/
       break;
   }
-    //MARK: xx.xx
+    //MARK: Left Match
     case 1:
+      intake.spin(fwd, 100000, rpm);
+      inchDrive(30);
+      turnHeading(-90);
+      scraper.set(!(scraper.value()));
+      inchDrive(11);
+      wait(0.3, sec);
+      inchDrive(-5);
+      inchDrive(6);
+      wait(0.7, sec);
+      inchDrive(-7);
+      scraper.set(!scraper.value());
+      inchDrive(-30);
+      topStage.spin(fwd, 100000, rpm);
       break;
 
     //MARK: xx.xx

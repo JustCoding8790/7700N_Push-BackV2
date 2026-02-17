@@ -35,6 +35,8 @@ const double kd = 0;
 const double turnkp = 0.006;
 const double turnki = 0.0006;
 const double turnkd = 0;
+double x_coor = 0;
+double y_coor = 0;
 color magenta = color(255, 50, 150);
 color brown = color(150, 100, 0);
 color arcade = color(50, 150, 200);
@@ -120,6 +122,21 @@ void drivePct(double lSpeed, double rSpeed, int waitTime) {
   wait(waitTime, msec);
 }
 //MARK: Auton funcs
+
+/*
+Inch Drive Odometry Prototype - Math for New Coords
+
+tan heading = y/x
+y = x tan heading
+x^2 + y^2 = distance
+x^2 = distance - (x tan heading)^2
+x = sqrt(distance) - x tan heading
+x tan heading + x = sqrt(distance)
+x * (tan heading + 1) = sqrt(distance)
+
+x = sqrt(distance) / (tan heading + 1)
+y = x tan heading
+*/
 
 void inchDrive(double target, long time) {
   int counter = 0;

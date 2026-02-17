@@ -196,6 +196,7 @@ void autonTurn(double angle) {
  printf("currRotation: %0.2f, error: %0.2f\n", currRotation, error);
 }
 
+// slightly more percise than autonTurn
 void turnHeading(double heading) {
   double angle = heading - inertialSensor.heading(deg);
   if (angle <= -180) {

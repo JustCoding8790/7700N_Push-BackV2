@@ -1,11 +1,12 @@
-/*----------------------------------------------------------------------------*/
-/*                                                                            */
-/*    Module:       main.cpp                                                  */
-/*    Author:       jnaor, JustCoding8                                        */
-/*    Created:      2/6/2026, 5:40:27 PM                                      */
-/*    Description:  7700N Code, V2, Github, Mega Edition,                     */
-/*                                                                            */
-/*----------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------------------*/
+/*                                                                                      */
+/*    Judges, Please do yourselves a favor and dont look at names of commit history ;-; */
+/*    Module:       main.cpp                                                            */
+/*    Author:       jnaor, JustCoding8                                                  */
+/*    Created:      2/6/2026, 5:40:27 PM                                                */
+/*    Description:  7700N Code V2; For the rebuild 4 weeks before states                */
+/*                                                                                      */
+/*--------------------------------------------------------------------------------------*/
 
 // MARK: Includes
 #include "vex.h"

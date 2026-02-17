@@ -640,18 +640,26 @@ void autonomous(void) {
     //MARK: Left Match
     case 1:
       intake.spin(fwd, 100000, rpm);
-      inchDrive(30);
+      inchDrive(42);
       turnHeading(-90);
       scraper.set(!(scraper.value()));
-      inchDrive(11);
       wait(0.3, sec);
-      inchDrive(-5);
-      inchDrive(6);
-      wait(0.7, sec);
+      inchDrive(18, 2500);
+      wait(0.5, sec);
       inchDrive(-7);
-      scraper.set(!scraper.value());
-      inchDrive(-30);
-      topStage.spin(fwd, 100000, rpm);
+      turnHeading(-95);
+      scraper.set(!(scraper.value()));
+      wait(0.7, sec);
+      inchDrive(-36, 1500);
+      topStage.spin(fwd, 450, rpm);
+      wait(0.7, sec);
+      topStage.stop();
+      inchDrive(9);
+      turnHeading(-225);
+      inchDrive(36);
+      wait(0.5, sec);
+      turnHeading(45);
+      inchDrive(-18);
       break;
 
     //MARK: xx.xx

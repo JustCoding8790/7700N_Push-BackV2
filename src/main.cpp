@@ -509,7 +509,7 @@ void MotorDisplay(double y, double curr, double temp)
 	if (temp < 30) {
 	  Brain.Screen.setFillColor(blue);
     Controller1.Screen.print("Your motors are freezing over. Please heat them up.");
-    Controller1.rumble(- - - - - - -);
+    Controller1.rumble("- - - - - - -");
 	}
   else if(temp < 40 && temp  >= 30){
     Brain.Screen.setFillColor(green);

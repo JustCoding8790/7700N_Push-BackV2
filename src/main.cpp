@@ -637,37 +637,77 @@ void autonomous(void) {
       printf("Results - Position: %0.2f\nTime: %lu\n", leftM.position(rev) * pi * wheelDiamiter, totalTime);
       break;
   }
-    //MARK: Left Match
+    //MARK: Left Match (if both sides are different, trust left side as the correct version)
     case 1:
       intake.spin(fwd, 100000, rpm);
       inchDrive(42);
       turnHeading(-90);
       scraper.set(!(scraper.value()));
       wait(0.3, sec);
-      inchDrive(18, 2500);
-      wait(0.5, sec);
+      inchDrive(18, 1500);
+      wait(0.2, sec);
       inchDrive(-7);
-      turnHeading(-95);
+      //turnHeading(-95);
       scraper.set(!(scraper.value()));
       wait(0.7, sec);
-      inchDrive(-36, 1500);
+      inchDrive(-40, 1500);
+      intake.spin(fwd, -100000, rpm);
+      topStage.spin(fwd, -450, rpm);
+      intake.spin(fwd, 100000, rpm);
+      wait(0.2, sec);
       topStage.spin(fwd, 450, rpm);
-      wait(0.7, sec);
+      wait(2, sec);
       topStage.stop();
-      inchDrive(9);
-      turnHeading(-225);
+      inchDrive(18);
+      turnHeading(-215);
       inchDrive(36);
       wait(0.5, sec);
-      turnHeading(45);
-      inchDrive(-18);
+      turnHeading(-45);
+      inchDrive(-24);
       break;
 
     //MARK: xx.xx
     case 2:
+    intake.spin(fwd, 100000, rpm);
+      inchDrive(42);
+      turnHeading(90);
+      scraper.set(!(scraper.value()));
+      wait(0.3, sec);
+      inchDrive(18, 1500);
+      wait(0.2, sec);
+      inchDrive(-7);
+      //turnHeading(-95);
+      scraper.set(!(scraper.value()));
+      wait(0.3, sec);
+      inchDrive(-60, 750);
+      intake.spin(fwd, -100000, rpm);
+      topStage.spin(fwd, -450, rpm);
+      intake.spin(fwd, 100000, rpm);
+      wait(0.2, sec);
+      topStage.spin(fwd, 450, rpm);
+      wait(1.5, sec);
+      topStage.stop();
+      inchDrive(18);
+      turnHeading(215);
+      inchDrive(36);
+      wait(0.5, sec);
+      turnHeading(45);
+      inchDrive(-24);
+      intake.spin(fwd, -100000, rpm);
+      topStage.spin(fwd, -450, rpm);
+      intake.spin(fwd, 100000, rpm);
+      wait(0.2, sec);
+      topStage.spin(fwd, 450, rpm);
       break;
 
     //MARK: xx.xx
     case 3:
+      //MARK: Skills Parking
+      inchDrive(-5);
+      driveTrainMove(10000);
+      wait(1, sec);
+      driveTrainStop();
+  break;
       break;
 
     //MARK: Regular Skills
@@ -713,8 +753,10 @@ void autonomous(void) {
       inchDrive(36);
     break;
 
-    //MARK: xx.xx
+    //MARK: Drive Forward
     case 5:
+      wait(13, sec);
+      inchDrive(20, 1000);
       break;
 
     //MARK: xx.xx
@@ -825,7 +867,7 @@ void usercontrol(void) {
  }
 }
 
-//
+//`1
 // Main will set up the competition functions and callbacks.
 //
 int main() {

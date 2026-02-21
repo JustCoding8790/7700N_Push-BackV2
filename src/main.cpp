@@ -20,7 +20,7 @@ using namespace vex;
 // auton selector
 int autonSelected = 1;
 int autonMin = 0;
-int autonMax = 8;
+int autonMax = 9;
 bool selectPressed = false;
 bool selectingAuton = true;
 bool redoSelection = false;
@@ -662,9 +662,9 @@ void autonomous(void) {
       turnHeading(-215);
       inchDrive(42);
       //wait(0.5, sec);
-      turnHeading(-60);
+      turnHeading(-55);
       inchDrive(-20);
-      intake.spin(fwd, 100000, rpm);
+      //intake.spin(fwd, 100000, rpm);
       //wait(0.2, sec);
       topStage.spin(fwd, -10000, rpm);
       break;
@@ -773,6 +773,12 @@ void autonomous(void) {
     //MARK: xx.xx
     case 8:
       break;
+
+    //MARK: xx.xx
+    case 9:
+    topStage.spin(fwd, -10000, rpm);
+    intake.spin(fwd, 100000, rpm);
+     break;
   }
 }
 

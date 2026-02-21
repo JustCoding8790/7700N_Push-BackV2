@@ -764,8 +764,33 @@ void autonomous(void) {
       inchDrive(20, 1000);
       break;
 
-    //MARK: xx.xx
+    //MARK: Right match auto
     case 6:
+    intake.spin(fwd, 100000, rpm);
+      inchDrive(43);
+      turnHeading(90);
+      scraper.set(!(scraper.value()));
+      wait(0.3, sec);
+      inchDrive(22, 1500);
+      wait(0.1, sec);
+      inchDrive(-7);
+      //turnHeading(-95);
+      scraper.set(!(scraper.value()));
+      wait(0.7, sec);
+      inchDrive(-40, 1500);
+      intake.spin(fwd, -100000, rpm);
+      topStage.spin(fwd, -450, rpm);
+      intake.spin(fwd, 100000, rpm);
+      //wait(0.2, sec);
+      topStage.spin(fwd, 450, rpm);
+      wait(1, sec);
+      topStage.stop();
+      intake.stop();
+      inchDrive(18);
+      turnHeading(90);
+      inchDrive(5);
+      turnHeading(90);
+      inchDrive(25);
       break;
 
     //MARK: xx.xx

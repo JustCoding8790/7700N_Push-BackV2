@@ -518,9 +518,10 @@ void MotorDisplay(double y, double curr, double temp)
   }
   else if(temp <= 50 && temp  >= 45){
 		Brain.Screen.setFillColor(orange);
+    Controller1.Screen.print("You should probably cool down ur motors");
     Controller1.rumble("-");
 	}
-  else if(temp <= 60 && temp  >= 50){
+  else if(temp <= 55 && temp  >= 50){
     Brain.Screen.setFillColor(red);
     Controller1.Screen.print("MOTORS OVERHEATING: COOL THEM DOWN ASAP");
     Controller1.rumble("- - - - - - -");
@@ -528,7 +529,7 @@ void MotorDisplay(double y, double curr, double temp)
   else {
 		Brain.Screen.setFillColor(purple);
     while (true) {
-      Controller1.rumble("-");
+      Controller1.rumble("- - - - - - - - - -");
       Controller1.Screen.print("YOUR MOTORS ARE SPONTANIOUSLY COMBUSTING: SHUT DOWN YOUR ROBOT IMMEDIATELY");
       wait(500, msec);
     }

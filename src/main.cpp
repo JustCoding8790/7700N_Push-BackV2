@@ -660,7 +660,7 @@ void autonomous(void) {
       topStage.stop();
       inchDrive(18);
       turnHeading(-215);
-      inchDrive(36);
+      inchDrive(40);
       wait(0.5, sec);
       turnHeading(-45);
       inchDrive(-24);

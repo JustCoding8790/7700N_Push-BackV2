@@ -663,10 +663,12 @@ void autonomous(void) {
       inchDrive(42);
       //wait(0.5, sec);
       turnHeading(-55);
-      inchDrive(-20);
+      inchDrive(-18);
       //intake.spin(fwd, 100000, rpm);
       //wait(0.2, sec);
-      topStage.spin(fwd, -10000, rpm);
+      topStage.spin(fwd, 10000, rpm);
+      wait(0.1, sec);
+      //topStage.spin(fwd, -10000, rpm);
       break;
 
     //MARK: xx.xx

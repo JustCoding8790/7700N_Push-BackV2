@@ -18,9 +18,9 @@
 // Essentials
 using namespace vex;
 // auton selector
-int autonSelected = 10;
+int autonSelected = 1;
 int autonMin = 0;
-int autonMax = 10;
+int autonMax = 9;
 bool selectPressed = false;
 bool selectingAuton = true;
 bool redoSelection = false;
@@ -46,6 +46,7 @@ color brown = color(150, 100, 0);
 color arcade = color(50, 150, 200);
 color tank = color(0, 50, 0);
 color dual = color(255, 200, 255);
+color forest = color(15, 120, 15);
 
 // A global instance of competition
 competition Competition;
@@ -258,7 +259,7 @@ void drawGUI() {
     Brain.Screen.drawCircle(310, 75, 25);
     Brain.Screen.setPenColor(red);
     Brain.Screen.printAt(25, 75, "Testing");
-    Brain.Screen.printAt(25, 100, "Auton");
+    Brain.Screen.printAt(25, 100, "PID");
     Brain.Screen.printAt(25, 125, "(N/A)");
   }
   else if (autonSelected == 1) {
@@ -266,27 +267,27 @@ void drawGUI() {
     Brain.Screen.drawRectangle(20, 50, 100, 100);
     Brain.Screen.drawCircle(310, 75, 25);
     Brain.Screen.setPenColor(white);
-    Brain.Screen.printAt(25, 75, "Left");
-    Brain.Screen.printAt(25, 100, "Match");
-    Brain.Screen.printAt(25, 125, "(+20)");
+    Brain.Screen.printAt(25, 75, "Qual.");
+    Brain.Screen.printAt(25, 100, "Left");
+    Brain.Screen.printAt(25, 125, "(+23)");
   }
   else if (autonSelected == 2) {
     Brain.Screen.setFillColor(blue);
     Brain.Screen.drawRectangle(20, 50, 100, 100);
     Brain.Screen.drawCircle(310, 75, 25);
     Brain.Screen.setPenColor(white);
-    Brain.Screen.printAt(25, 75, "Right");
-    Brain.Screen.printAt(25, 100, "Match");
-    Brain.Screen.printAt(25, 125, "(+x)");
+    Brain.Screen.printAt(25, 75, "Qual.");
+    Brain.Screen.printAt(25, 100, "Right");
+    Brain.Screen.printAt(25, 125, "(+21)");
   }
   else if (autonSelected == 3) {
     Brain.Screen.setFillColor(orange);
     Brain.Screen.drawRectangle(20, 50, 100, 100);
     Brain.Screen.drawCircle(310, 75, 25);
     Brain.Screen.setPenColor(white);
-    Brain.Screen.printAt(25, 75, "x.x");
-    Brain.Screen.printAt(25, 100, "x.x");
-    Brain.Screen.printAt(25, 125, "(+x)");
+    Brain.Screen.printAt(25, 75, "Simple");
+    Brain.Screen.printAt(25, 100, "Skills");
+    Brain.Screen.printAt(25, 125, "(+15)");
   }
   else if (autonSelected == 4) {
     Brain.Screen.setFillColor(purple);
@@ -302,9 +303,9 @@ void drawGUI() {
     Brain.Screen.drawRectangle(20, 50, 100, 100);
     Brain.Screen.drawCircle(310, 75, 25);
     Brain.Screen.setPenColor(black);
-    Brain.Screen.printAt(25, 75, "x.x");
-    Brain.Screen.printAt(25, 100, "x.x");
-    Brain.Screen.printAt(25, 125, "(+x)");
+    Brain.Screen.printAt(25, 75, "Drive");
+    Brain.Screen.printAt(25, 100, "Forward");
+    Brain.Screen.printAt(25, 125, "(+0)");
     Brain.Screen.setPenColor(white);
   }
   else if (autonSelected == 6) {
@@ -312,8 +313,8 @@ void drawGUI() {
     Brain.Screen.drawRectangle(20, 50, 100, 100);
     Brain.Screen.drawCircle(310, 75, 25);
     Brain.Screen.setPenColor(black);
-    Brain.Screen.printAt(25, 75, "x.x");
-    Brain.Screen.printAt(25, 100, "x.x");
+    Brain.Screen.printAt(25, 75, "Elim.");
+    Brain.Screen.printAt(25, 100, "Right");
     Brain.Screen.printAt(25, 125, "(+x)");
     Brain.Screen.setPenColor(white);
   }
@@ -335,6 +336,15 @@ void drawGUI() {
     Brain.Screen.printAt(25, 100, "x.x");
     Brain.Screen.printAt(25, 125, "(+x)");
   }
+  else if (autonSelected == 9) {
+    Brain.Screen.setFillColor(forest);
+    Brain.Screen.drawRectangle(20, 50, 100, 100);
+    Brain.Screen.drawCircle(310, 75, 25);
+    Brain.Screen.setPenColor(white);
+    Brain.Screen.printAt(25, 75, "Elim.");
+    Brain.Screen.printAt(25, 100, "Left");
+    Brain.Screen.printAt(25, 125, "(+x)");
+  }
   if (selectingAuton) {
     Brain.Screen.setFillColor(red);
     Brain.Screen.setPenColor(white);
@@ -346,11 +356,11 @@ void drawGUI() {
   else {
     std::random_device rd;
     std::mt19937 gen(rd() ^ std::chrono::high_resolution_clock::now().time_since_epoch().count());
-    std::uniform_int_distribution<> distrib(1, 14);
+    std::uniform_int_distribution<> distrib(1, 16);
     int random_quote = distrib(gen);
     Brain.Screen.setFillColor(transparent);
     if (!(redoSelection)) {
-      random_quote = 14;  // So we can see the version instantly on the brain
+      random_quote = 15;  // So we can see the version instantly on the brain
     }
     if (autonSelected == 0) {
       Brain.Screen.printAt(1, 40, "TUNING TEST ACTIVATED - SERIOUS MODE = TRUE");
@@ -396,6 +406,9 @@ void drawGUI() {
     }
     else if (random_quote == 14) {
       Brain.Screen.printAt(1, 40, "Tank drive is tanking!");
+    }
+    else if (random_quote == 15) {
+      Brain.Screen.printAt(1, 40, "But I'm not Russian!");
     }
     else {
       Brain.Screen.printAt(1, 40, "Just you and the clock... and maybe more.");
@@ -640,7 +653,7 @@ void autonomous(void) {
       printf("Results - Position: %0.2f\nTime: %lu\n", leftM.position(rev) * pi * wheelDiamiter, totalTime);
       break;
   }
-    //MARK: Left Match (if both sides are different, trust left side as the correct version)
+    //MARK: Qualification Left Match (if both sides are different, trust left side as the correct version)
     case 1:
       intake.spin(fwd, 100000, rpm);
       inchDrive(43);
@@ -663,9 +676,9 @@ void autonomous(void) {
       topStage.stop();
       inchDrive(18);
       turnHeading(-215);
-      inchDrive(42);
+      inchDrive(48);
       //wait(0.5, sec);
-      turnHeading(-55);
+      turnHeading(-45);
       inchDrive(-18);
       //intake.spin(fwd, 100000, rpm);
       //wait(0.2, sec);
@@ -674,48 +687,47 @@ void autonomous(void) {
       //topStage.spin(fwd, -10000, rpm);
       break;
 
-    //MARK: xx.xx
+    //MARK: Qualification Right Match
     case 2:
-    intake.spin(fwd, 100000, rpm);
-      inchDrive(42);
+      intake.spin(fwd, 100000, rpm);
+      inchDrive(43);
       turnHeading(90);
       scraper.set(!(scraper.value()));
       wait(0.3, sec);
-      inchDrive(18, 1500);
-      wait(0.2, sec);
+      inchDrive(22, 1500);
+      wait(0.1, sec);
       inchDrive(-7);
       //turnHeading(-95);
       scraper.set(!(scraper.value()));
-      wait(0.3, sec);
-      inchDrive(-60, 750);
+      wait(0.7, sec);
+      inchDrive(-40, 1500);
       intake.spin(fwd, -100000, rpm);
       topStage.spin(fwd, -450, rpm);
       intake.spin(fwd, 100000, rpm);
-      wait(0.2, sec);
+      //wait(0.2, sec);
       topStage.spin(fwd, 450, rpm);
-      wait(1.5, sec);
+      wait(1, sec);
       topStage.stop();
       inchDrive(18);
       turnHeading(215);
-      inchDrive(36);
-      wait(0.5, sec);
+      inchDrive(48);
+      //wait(0.5, sec);
       turnHeading(45);
-      inchDrive(-24);
-      intake.spin(fwd, -100000, rpm);
-      topStage.spin(fwd, -450, rpm);
-      intake.spin(fwd, 100000, rpm);
-      wait(0.2, sec);
-      topStage.spin(fwd, 450, rpm);
+      inchDrive(-18);
+      //intake.spin(fwd, 100000, rpm);
+      //wait(0.2, sec);
+      topStage.spin(fwd, 10000, rpm);
+      wait(0.1, sec);
+      //topStage.spin(fwd, -10000, rpm);
       break;
 
-    //MARK: xx.xx
+    //MARK: Simple Skills
     case 3:
       //MARK: Skills Parking
       inchDrive(-5);
       driveTrainMove(10000);
       wait(1, sec);
       driveTrainStop();
-  break;
       break;
 
     //MARK: Regular Skills
@@ -767,9 +779,9 @@ void autonomous(void) {
       inchDrive(20, 1000);
       break;
 
-    //MARK: Right match auto
+    //MARK: Elimination Right Match
     case 6:
-    intake.spin(fwd, 100000, rpm);
+      intake.spin(fwd, 100000, rpm);
       inchDrive(43);
       turnHeading(90);
       scraper.set(!(scraper.value()));
@@ -804,13 +816,19 @@ void autonomous(void) {
     case 8:
       break;
 
-    //MARK: xx.xx
+    //MARK: Elimination Left Match
     case 9:
-      intake.spin(fwd, 10000, rpm);
-      topStage.spin(fwd, 10000, rpm);     
-      inchDrive(40);
+      intake.spin(fwd, 10000, rpm);    
+      inchDrive(20);
+      inchDrive(10);
+      
       wait(0.2, sec);
-      turnHeading(-120);
+      turnHeading(-100);
+      inchDrive(40);
+      turnHeading(-170);
+      scraper.set(!(scraper.value()));
+      wait(0.3, sec);
+      inchDrive(40, 1500);
       break;
   }
 }
@@ -819,6 +837,11 @@ void autonomous(void) {
 //MARK:--
 //MARK: Usercontrol
 void usercontrol(void) {
+  inertialSensor.calibrate(3000);
+  while (inertialSensor.isCalibrating()) {
+    wait(100, msec);
+  }
+
   // User control code here, inside the loop
   while (1) {
     Brain.Screen.clearScreen();
@@ -864,7 +887,8 @@ void usercontrol(void) {
       rStick = 0;
       driveTrainStop();
     }
-
+    //lStick = 0;
+    //rStick = 0;
     drivePct(lStick, rStick, 10);
 
     if (Controller1.ButtonR1.pressing()) {

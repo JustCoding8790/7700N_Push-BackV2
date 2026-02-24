@@ -27,7 +27,7 @@ bool redoSelection = false;
 bool gui = true;
 bool guiChanged = true;
 int arcadeMode = 0;
-// auton
+// auton 
 double wheelDiamiter = 3.25;
 double gearRatioExternal = 0.75;
 double pi = 3.141592653589793238;

@@ -33,11 +33,11 @@ double gearRatioExternal = 0.75;
 double pi = 3.141592653589793238;
 bool speedIsLocked = false;
 const double kp = 0.025;
-const double ki = 0.00275;
+const double ki = 0.0275;
 const double kd = 0.0025;
 const double turnkp = 0.006;
 const double turnki = 0.0003;
-const double turnkd = 0.0003;
+const double turnkd = 0.0006;
 // coord tracking
 double x_coord = 0;
 double y_coord = 0;
@@ -839,8 +839,8 @@ void autonomous(void) {
       inchDrive(10);
       wait(0.2, sec);
       turnHeading(-100);
-      inchDrive(37);
-      turnHeading(-165);
+      inchDrive(39);
+      turnHeading(-160);
       scraper.set(!(scraper.value()));
       wait(0.3, sec);
       inchDrive(35, 1250);
@@ -860,13 +860,13 @@ void autonomous(void) {
       topStage.stop();
       intake.stop();
       inchDrive(12, 500);
-      turnHeading(-255);
-      inchDrive(5);
-      turnHeading(-345);
+      turnHeading(-250);
+      inchDrive(9);
+      turnHeading(-340);
       descorer.set(!(descorer.value()));
       inchDrive(9, 500);
       descorer.set(!(descorer.value()));
-      inchDrive(9, 500);
+      inchDrive(17, 1000);
       break;
   }
 }

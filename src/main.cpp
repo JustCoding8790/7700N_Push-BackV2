@@ -18,7 +18,7 @@
 // Essentials
 using namespace vex;
 // auton selector
-int autonSelected = 1;
+int autonSelected = 9;
 int autonMin = 0;
 int autonMax = 9;
 bool selectPressed = false;
@@ -499,6 +499,7 @@ void selectAuton() {
 //MARK:--
 // MARK: Motor Monitor
 
+int colorScore = 0;
 double YOFFSET = 20; //offset for displaying info on the brain so it doesnt clip out of screen
 void MotorDisplay(double y, double curr, double temp)
 {
@@ -521,39 +522,35 @@ void MotorDisplay(double y, double curr, double temp)
 	
 	if (temp < 30) {
 	  Brain.Screen.setFillColor(blue);
-    Controller1.Screen.print("Your motors are freezing over. Please heat them up.");
-    Controller1.rumble("- - - - - - -");
 	}
   else if(temp < 40 && temp  >= 30){
+    colorScore += 1;
     Brain.Screen.setFillColor(green);
   }
   else if(temp < 45 && temp  >= 40){
+    colorScore += 2;
 		Brain.Screen.setFillColor(yellow);
-    Controller1.rumble(".");
   }
-  else if(temp <= 50 && temp  >= 45){
+  else if(temp < 50 && temp  >= 45){
+    colorScore += 3;
 		Brain.Screen.setFillColor(orange);
-    Controller1.Screen.print("You should probably cool down ur motors");
-    Controller1.rumble("-");
 	}
-  else if(temp <= 55 && temp  >= 50){
+  else if(temp < 55 && temp  >= 50){
+    colorScore += 4;
     Brain.Screen.setFillColor(red);
-    Controller1.Screen.print("MOTORS OVERHEATING: COOL THEM DOWN ASAP");
-    Controller1.rumble("- - - - - - -");
   }
   else {
+    colorScore += 5;
 		Brain.Screen.setFillColor(purple);
-    while (true) {
-      Controller1.rumble("...---... ...---... ...---... ...---...");
-      Controller1.Screen.print("YOUR MOTORS ARE SPONTANIOUSLY COMBUSTING: SHUT DOWN YOUR ROBOT IMMEDIATELY");
-      wait(500, msec);
-    }
+    Controller1.Screen.print("YOUR MOTORS ARE SPONTANIOUSLY COMBUSTING: SHUT DOWN YOUR ROBOT IMMEDIATELY");
+    Controller1.rumble("...---... ...---... ...---... ...---...");
 	}
 }
 
 // Displays information on the brain
 void Display()
 {
+  colorScore = 0;
   Brain.Screen.setFont(monoM);
 	double leftFCurr = leftF.current(amp);
 	double leftFTemp = leftF.temperature(celsius);
@@ -626,6 +623,25 @@ void Display()
 	} else {
 		Brain.Screen.printAt(5, YOFFSET + 141, "Topstage - DISCONNECTED");
 	}
+  if (colorScore < 8) {
+    Controller1.Screen.print("Your motors are freezing over. Please heat them up.");
+    Controller1.rumble("- - - - - - -");
+  }
+  else if (colorScore >= 12) {
+    Controller1.rumble(".");
+  }
+  else if (colorScore >= 20) {
+    Controller1.Screen.print("You should probably cool down ur motors");
+    Controller1.rumble("-");
+  }
+  else if (colorScore >= 28) {
+    Controller1.Screen.print("MOTORS OVERHEATING: COOL THEM DOWN ASAP");
+    Controller1.rumble("- - - - - - -");
+  }
+  else if (colorScore > 32) {
+    Controller1.Screen.print("YOUR MOTORS ARE SPONTANIOUSLY COMBUSTING: SHUT DOWN YOUR ROBOT IMMEDIATELY");
+    Controller1.rumble("...---... ...---... ...---... ...---...");
+  }
 }
 
 //MARK: Auton FR XD
@@ -821,18 +837,39 @@ void autonomous(void) {
       intake.spin(fwd, 10000, rpm);    
       inchDrive(20);
       inchDrive(10);
-      
       wait(0.2, sec);
       turnHeading(-100);
-      inchDrive(40);
-      turnHeading(-170);
+      inchDrive(37);
+      turnHeading(-165);
       scraper.set(!(scraper.value()));
       wait(0.3, sec);
-      inchDrive(40, 1500);
+      inchDrive(35, 1250);
+      wait(0.1, sec);
+      inchDrive(-7, 250);
+      //turnHeading(-95);
+      scraper.set(!(scraper.value()));
+      wait(0.7, sec);
+      inchDrive(-40, 1500);
+      intake.spin(fwd, -100000, rpm);
+      topStage.spin(fwd, -450, rpm);
+      intake.spin(fwd, 100000, rpm);
+      //wait(0.2, sec);
+      topStage.spin(fwd, 450, rpm);
+      topStage.spin(fwd, 450, rpm);
+      wait(1, sec);
+      topStage.stop();
+      intake.stop();
+      inchDrive(12, 500);
+      turnHeading(-255);
+      inchDrive(5);
+      turnHeading(-345);
+      descorer.set(!(descorer.value()));
+      inchDrive(9, 500);
+      descorer.set(!(descorer.value()));
+      inchDrive(9, 500);
       break;
   }
 }
-
 
 //MARK:--
 //MARK: Usercontrol

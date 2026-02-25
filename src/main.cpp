@@ -18,7 +18,7 @@
 // Essentials
 using namespace vex;
 // auton selector
-int autonSelected = 9;
+int autonSelected = 2;
 int autonMin = 0;
 int autonMax = 9;
 bool selectPressed = false;
@@ -647,6 +647,10 @@ void Display()
 //MARK: Auton FR XD
 
 void pre_auton(void) {
+  /*inertialSensor.calibrate(3000);
+  while (inertialSensor.isCalibrating()) {
+    wait(100, msec);
+  }*/
   drawGUI();
   Brain.Screen.pressed(selectAuton);
   setBrakeMode(brakeType::brake);
@@ -672,17 +676,17 @@ void autonomous(void) {
     //MARK: Qualification Left Match (if both sides are different, trust left side as the correct version)
     case 1:
       intake.spin(fwd, 100000, rpm);
-      inchDrive(43);
+      inchDrive(39);
       turnHeading(-90);
       scraper.set(!(scraper.value()));
       wait(0.3, sec);
-      inchDrive(22, 1500);
+      inchDrive(22, 1250);
       wait(0.1, sec);
       inchDrive(-7);
       //turnHeading(-95);
       scraper.set(!(scraper.value()));
       wait(0.7, sec);
-      inchDrive(-40, 1500);
+      inchDrive(-33, 1500);
       intake.spin(fwd, -100000, rpm);
       topStage.spin(fwd, -450, rpm);
       intake.spin(fwd, 100000, rpm);
@@ -691,11 +695,11 @@ void autonomous(void) {
       wait(1, sec);
       topStage.stop();
       inchDrive(18);
-      turnHeading(-215);
+      turnHeading(-225);
       inchDrive(48);
       //wait(0.5, sec);
-      turnHeading(-45);
-      inchDrive(-18);
+      turnHeading(-40);
+      inchDrive(-9);
       //intake.spin(fwd, 100000, rpm);
       //wait(0.2, sec);
       topStage.spin(fwd, 10000, rpm);
@@ -706,17 +710,17 @@ void autonomous(void) {
     //MARK: Qualification Right Match
     case 2:
       intake.spin(fwd, 100000, rpm);
-      inchDrive(43);
+      inchDrive(39);
       turnHeading(90);
       scraper.set(!(scraper.value()));
       wait(0.3, sec);
-      inchDrive(22, 1500);
+      inchDrive(22, 1250);
       wait(0.1, sec);
       inchDrive(-7);
       //turnHeading(-95);
       scraper.set(!(scraper.value()));
       wait(0.7, sec);
-      inchDrive(-40, 1500);
+      inchDrive(-33, 1500);
       intake.spin(fwd, -100000, rpm);
       topStage.spin(fwd, -450, rpm);
       intake.spin(fwd, 100000, rpm);
@@ -725,11 +729,11 @@ void autonomous(void) {
       wait(1, sec);
       topStage.stop();
       inchDrive(18);
-      turnHeading(215);
+      turnHeading(225);
       inchDrive(48);
       //wait(0.5, sec);
-      turnHeading(45);
-      inchDrive(-18);
+      //turnHeading(-40);
+      inchDrive(9);
       //intake.spin(fwd, 100000, rpm);
       //wait(0.2, sec);
       topStage.spin(fwd, 10000, rpm);
@@ -751,7 +755,14 @@ void autonomous(void) {
       inchDrive(31);
       turnHeading(90);
       inchDrive(14);
+      scraper.set(!(scraper.value()));
+      wait(0.3, sec);
+      inchDrive(22, 1500);
+      wait(0.1, sec);
+      inchDrive(-7);
+      //turnHeading(-95);
       //Unload, customize later
+      scraper.set(!(scraper.value()));
       wait(3, sec);
       turnHeading(225);
       inchDrive(36);
@@ -775,6 +786,13 @@ void autonomous(void) {
       turnHeading(0);
       inchDrive(18);
       //Unload, customize later
+      scraper.set(!(scraper.value()));
+      wait(0.3, sec);
+      inchDrive(22, 1500);
+      wait(0.1, sec);
+      inchDrive(-7);
+      //turnHeading(-95);
+      scraper.set(!(scraper.value()));
       wait(3, sec);
       inchDrive(-44);
       // Score, customize later
@@ -874,11 +892,6 @@ void autonomous(void) {
 //MARK:--
 //MARK: Usercontrol
 void usercontrol(void) {
-  inertialSensor.calibrate(3000);
-  while (inertialSensor.isCalibrating()) {
-    wait(100, msec);
-  }
-
   // User control code here, inside the loop
   while (1) {
     Brain.Screen.clearScreen();
@@ -907,10 +920,6 @@ void usercontrol(void) {
       // int axis1 = Controller1.Axis1.position(pct);
       rStick = Controller1.Axis3.position(pct) * 1.25 + Controller1.Axis1.position(pct) * 1.4;
       lStick = Controller1.Axis3.position(pct) * 1.25 - Controller1.Axis1.position(pct) * 1.4;
-      /*if (axis3 > axis1) {
-        lStick -= Controller1.Axis3.position(pct) * 0.75;
-        rStick -= Controller1.Axis3.position(pct) * 0.75;
-      }*/
     }
     else {
       rStick = Controller1.Axis2.position(pct);

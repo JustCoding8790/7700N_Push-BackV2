@@ -944,7 +944,7 @@ void usercontrol(void) {
     
     else if (Controller1.ButtonR1.pressing()){
       // bla
-      topStage.spin(fwd, -1000, rpm);
+      topStage.spin(fwd, -100, rpm);
       intake.spin(fwd, 100000000, rpm);
     }
     else if (Controller1.ButtonL1.pressing()) {

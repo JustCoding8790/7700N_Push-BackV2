@@ -360,7 +360,7 @@ void drawGUI() {
     int random_quote = distrib(gen);
     Brain.Screen.setFillColor(transparent);
     if (!(redoSelection)) {
-      random_quote = 15;  // So we can see the version instantly on the brain
+      random_quote = 16;  // So we can see the version instantly on the brain
     }
     if (autonSelected == 0) {
       Brain.Screen.printAt(1, 40, "TUNING TEST ACTIVATED - SERIOUS MODE = TRUE");
@@ -411,7 +411,7 @@ void drawGUI() {
       Brain.Screen.printAt(1, 40, "But I'm not Russian!");
     }
     else {
-      Brain.Screen.printAt(1, 40, "Just you and the clock... and maybe more.");
+      Brain.Screen.printAt(1, 40, "Watch out for the walls, especially the 4th one.");
     }
     Brain.Screen.setFillColor(green);
     Brain.Screen.setPenColor(black);
@@ -940,9 +940,11 @@ void usercontrol(void) {
     if (Controller1.ButtonR1.pressing()) {
       // Intake bottom stage
       intake.spin(fwd, 100000, rpm);
+      topStage.spin(fwd, -100, rpm);
     }
     else if (Controller1.ButtonX.pressing()) {
       // Outtake bottom stage
+      topStage.spin(fwd, -100, rpm);
       intake.spin(fwd, -100000, rpm);
     }
     else {
@@ -950,7 +952,7 @@ void usercontrol(void) {
     }
     if (Controller1.ButtonL1.pressing()) {
       // Mid goal score
-      topStage.spin(fwd, -100000, rpm);
+      topStage.spin(fwd, 10000, rpm);
       intake.spin(fwd, 1000, rpm);
     }
     else if (Controller1.ButtonR2.pressing()) {

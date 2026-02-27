@@ -893,10 +893,9 @@ void autonomous(void) {
 //MARK: Usercontrol
 void usercontrol(void) {
   // User control code here, inside the loop
-  while (1) {
-    Brain.Screen.clearScreen();
-   setBrakeMode(brake);
    // Drive
+   Brain.Screen.clearScreen();
+   setBrakeMode(brake);
    while (1) {
     if (guiChanged == true) {
       if (gui == true) {
@@ -950,6 +949,7 @@ void usercontrol(void) {
     }
     else {
       intake.stop();
+      topStage.stop();
     }
     if (Controller1.ButtonL1.pressing()) {
       // Mid goal score
@@ -963,6 +963,7 @@ void usercontrol(void) {
     }
     else {
       topStage.stop();
+      intake.stop(); ews
     }
     if (Controller1.ButtonL2.pressing()) {
       descorer.set(!descorer.value());
@@ -980,7 +981,6 @@ void usercontrol(void) {
     }
   }
  }
-}
 
 //`1
 // Main will set up the competition functions and callbacks.

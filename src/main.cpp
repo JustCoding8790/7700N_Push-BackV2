@@ -18,7 +18,7 @@
 // Essentials
 using namespace vex;
 // auton selector
-int autonSelected = 2;
+int autonSelected = 1;
 int autonMin = 0;
 int autonMax = 9;
 bool selectPressed = false;
@@ -539,12 +539,11 @@ void MotorDisplay(double y, double curr, double temp)
     colorScore += 4;
     Brain.Screen.setFillColor(red);
   }
-  else {
+  else if(temp < 60 && temp  >= 55) {
     colorScore += 5;
 		Brain.Screen.setFillColor(purple);
-    Controller1.Screen.print("YOUR MOTORS ARE SPONTANIOUSLY COMBUSTING: SHUT DOWN YOUR ROBOT IMMEDIATELY");
-    Controller1.rumble("...---... ...---... ...---... ...---...");
 	}
+
 }
 
 // Displays information on the brain
@@ -642,6 +641,10 @@ void Display()
     Controller1.Screen.print("YOUR MOTORS ARE SPONTANIOUSLY COMBUSTING: SHUT DOWN YOUR ROBOT IMMEDIATELY");
     Controller1.rumble("...---... ...---... ...---... ...---...");
   }
+  else if (colorScore > 36) {
+    Controller1.Screen.print("BREAKING: TOWN LEVELED BY MOTOR EXPLOSION");
+    Controller1.rumble("...---... ...---... ...---... ...---... ...---... ...---... ...---... ...---... ...---... ...---... ...---... ...---... ...---... ...---... ...---... ...---...");
+  }
 }
 
 //MARK: Auton FR XD
@@ -698,7 +701,7 @@ void autonomous(void) {
       turnHeading(-225);
       inchDrive(48);
       //wait(0.5, sec);
-      turnHeading(-40);
+      turnHeading(-30);
       inchDrive(-9);
       //intake.spin(fwd, 100000, rpm);
       //wait(0.2, sec);
@@ -730,7 +733,7 @@ void autonomous(void) {
       topStage.stop();
       inchDrive(18);
       turnHeading(225);
-      inchDrive(48);
+      inchDrive(30);
       //wait(0.5, sec);
       //turnHeading(-40);
       inchDrive(9);
@@ -944,7 +947,7 @@ void usercontrol(void) {
     
     else if (Controller1.ButtonR1.pressing()){
       // bla
-      topStage.spin(fwd, -100, rpm);
+      topStage.spin(fwd, -50, rpm);
       intake.spin(fwd, 100000000, rpm);
     }
     else if (Controller1.ButtonL1.pressing()) {

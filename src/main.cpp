@@ -937,15 +937,16 @@ void usercontrol(void) {
     //rStick = 0;
     drivePct(lStick, rStick, 10);
 
-    if (Controller1.ButtonR1.pressing()) {
-      // Intake bottom stage
-      intake.spin(fwd, 100000, rpm);
-      topStage.spin(fwd, -100000, rpm);
-    }
-    else if (Controller1.ButtonX.pressing()) {
+    if (Controller1.ButtonX.pressing()) {
       // Outtake bottom stage
       topStage.spin(fwd, -100, rpm);
       intake.spin(fwd, -100000, rpm);
+    }
+    
+    else if (Controller1.ButtonR1.pressing()){
+      // bla
+      topStage.spin(fwd, -1000, rpm);
+      intake.spin(fwd, 100000000, rpm);
     }
     else {
       intake.stop();

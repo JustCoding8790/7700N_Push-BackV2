@@ -947,11 +947,7 @@ void usercontrol(void) {
       topStage.spin(fwd, -1000, rpm);
       intake.spin(fwd, 100000000, rpm);
     }
-    else {
-      intake.stop();
-      topStage.stop();
-    }
-    if (Controller1.ButtonL1.pressing()) {
+    else if (Controller1.ButtonL1.pressing()) {
       // Mid goal score
       topStage.spin(fwd, 10000, rpm);
       intake.spin(fwd, 1000, rpm);
@@ -962,8 +958,8 @@ void usercontrol(void) {
       intake.spin(fwd, 100000, rpm);
     }
     else {
+      intake.stop();
       topStage.stop();
-      intake.stop(); ews
     }
     if (Controller1.ButtonL2.pressing()) {
       descorer.set(!descorer.value());

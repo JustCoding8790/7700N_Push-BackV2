@@ -940,7 +940,7 @@ void usercontrol(void) {
     if (Controller1.ButtonR1.pressing()) {
       // Intake bottom stage
       intake.spin(fwd, 100000, rpm);
-      topStage.spin(fwd, -100, rpm);
+      topStage.spin(fwd, -100000, rpm);
     }
     else if (Controller1.ButtonX.pressing()) {
       // Outtake bottom stage

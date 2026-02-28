@@ -952,7 +952,7 @@ void usercontrol(void) {
     }
     else if (Controller1.ButtonL1.pressing()) {
       // Mid goal score
-      topStage.spin(fwd, 10000, rpm);
+      topStage.spin(fwd, 200, rpm);
       intake.spin(fwd, 1000, rpm);
     }
     else if (Controller1.ButtonR2.pressing()) {

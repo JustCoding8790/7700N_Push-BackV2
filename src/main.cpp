@@ -749,9 +749,8 @@ void autonomous(void) {
     //MARK: Skills Parking
     case 3:
       inchDrive(-5);
-      driveTrainMove(10000);
-      wait(1, sec);
-      driveTrainStop();
+      scraper.set(!scraper.value());
+      inchDrive(20);
       break;
 
     //MARK: Regular Skills

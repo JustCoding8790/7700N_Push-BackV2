@@ -287,14 +287,14 @@ void drawGUI() {
     Brain.Screen.setPenColor(white);
     Brain.Screen.printAt(25, 75, "Simple");
     Brain.Screen.printAt(25, 100, "Skills");
-    Brain.Screen.printAt(25, 125, "(+15)");
+    Brain.Screen.printAt(25, 125, "(+15/20)");
   }
   else if (autonSelected == 4) {
     Brain.Screen.setFillColor(purple);
     Brain.Screen.drawRectangle(20, 50, 100, 100);
     Brain.Screen.drawCircle(310, 75, 25);
     Brain.Screen.setPenColor(white);
-    Brain.Screen.printAt(25, 75, "Regular");
+    Brain.Screen.printAt(25, 75, "Regular (risky)");
     Brain.Screen.printAt(25, 100, "Skills");
     Brain.Screen.printAt(25, 125, "(+?)");
   }
@@ -303,8 +303,8 @@ void drawGUI() {
     Brain.Screen.drawRectangle(20, 50, 100, 100);
     Brain.Screen.drawCircle(310, 75, 25);
     Brain.Screen.setPenColor(black);
-    Brain.Screen.printAt(25, 75, "Drive");
-    Brain.Screen.printAt(25, 100, "Forward");
+    Brain.Screen.printAt(25, 75, "Helper");
+    Brain.Screen.printAt(25, 100, "for Solo AWP");
     Brain.Screen.printAt(25, 125, "(+0)");
     Brain.Screen.setPenColor(white);
   }
@@ -313,8 +313,8 @@ void drawGUI() {
     Brain.Screen.drawRectangle(20, 50, 100, 100);
     Brain.Screen.drawCircle(310, 75, 25);
     Brain.Screen.setPenColor(black);
-    Brain.Screen.printAt(25, 75, "Elim.");
-    Brain.Screen.printAt(25, 100, "Right");
+    Brain.Screen.printAt(25, 75, "x.x");
+    Brain.Screen.printAt(25, 100, "x.x");
     Brain.Screen.printAt(25, 125, "(+x)");
     Brain.Screen.setPenColor(white);
   }
@@ -332,8 +332,8 @@ void drawGUI() {
     Brain.Screen.drawRectangle(20, 50, 100, 100);
     Brain.Screen.drawCircle(310, 75, 25);
     Brain.Screen.setPenColor(white);
-    Brain.Screen.printAt(25, 75, "x.x");
-    Brain.Screen.printAt(25, 100, "x.x");
+    Brain.Screen.printAt(25, 75, "Elim.");
+    Brain.Screen.printAt(25, 100, "Right");
     Brain.Screen.printAt(25, 125, "(+x)");
   }
   else if (autonSelected == 9) {
@@ -342,7 +342,7 @@ void drawGUI() {
     Brain.Screen.drawCircle(310, 75, 25);
     Brain.Screen.setPenColor(white);
     Brain.Screen.printAt(25, 75, "Elim.");
-    Brain.Screen.printAt(25, 100, "Left");
+    Brain.Screen.printAt(25, 100, "Left (Use Aligner)");
     Brain.Screen.printAt(25, 125, "(+x)");
   }
   if (selectingAuton) {
@@ -571,56 +571,56 @@ void Display()
 		MotorDisplay(1, leftFCurr, leftFTemp);
 		Brain.Screen.printAt(300, YOFFSET + 1, "LeftFront");
 	} else {
-		Brain.Screen.printAt(5, YOFFSET + 1, "LeftFront - DISCONNECTED");
+		Brain.Screen.printAt(5, YOFFSET + 1, "LeftFront - DC");
 	}
 	
 	if (leftM.installed()) {
     MotorDisplay(21, leftMCurr, leftMTemp);
     Brain.Screen.printAt(300, YOFFSET + 21, "LeftMiddle");
   } else {
-    Brain.Screen.printAt(5, YOFFSET + 21, "LeftMiddle - DISCONNECTED");
+    Brain.Screen.printAt(5, YOFFSET + 21, "LeftMiddle - DC");
   }
 
 	if (leftR.installed()){
 		MotorDisplay(41, leftBackCurr, leftBackTemp);
 		Brain.Screen.printAt(300, YOFFSET + 41, "LeftBack");
 	} else {
-		Brain.Screen.printAt(5, YOFFSET + 41, "LeftBack - DISCONNECTED");
+		Brain.Screen.printAt(5, YOFFSET + 41, "LeftBack - DC");
   }
 
 	if (rightF.installed()) {
 		MotorDisplay(61, rightFCurr, rightFTemp);
 		Brain.Screen.printAt(300, YOFFSET + 61, "RightFront");
 	} else {
-		Brain.Screen.printAt(5, YOFFSET + 61, "RightFront - DISCONNECTED");
+		Brain.Screen.printAt(5, YOFFSET + 61, "RightFront - DC");
 	}
 
   if (rightM.installed()) {
     MotorDisplay(81, rightMCurr, rightMTemp);
     Brain.Screen.printAt(300, YOFFSET + 81, "RightMiddle");
   } else {
-    Brain.Screen.printAt(5, YOFFSET + 81, "RightMiddle - DISCONNECTED");
+    Brain.Screen.printAt(5, YOFFSET + 81, "RightMiddle - DC");
   }
 
   if (rightR.installed()) {
     MotorDisplay(101, rightBackCurr, rightBackTemp);
     Brain.Screen.printAt(300, YOFFSET + 101, "RightRear");
   } else {
-    Brain.Screen.printAt(5, YOFFSET + 101, "RightRear - DISCONNECTED");
+    Brain.Screen.printAt(5, YOFFSET + 101, "RightRear - DC");
   }
 	
 	if (intake.installed()) {
 		MotorDisplay(121, intakeCurr, intakeTemp);
 		Brain.Screen.printAt(300, YOFFSET + 121, "Intake");
 	} else {
-		Brain.Screen.printAt(5, YOFFSET + 121, "Intake - DISCONNECTED");
+		Brain.Screen.printAt(5, YOFFSET + 121, "Intake - DC");
 	}
 
   if (topStage.installed()){
 		MotorDisplay(141, topStageCurr, topStageTemp);
 		Brain.Screen.printAt(300, YOFFSET + 141, "TopStage");
 	} else {
-		Brain.Screen.printAt(5, YOFFSET + 141, "Topstage - DISCONNECTED");
+		Brain.Screen.printAt(5, YOFFSET + 141, "Topstage - DC");
 	}
   if (colorScore < 8) {
     Controller1.Screen.print("Your motors are freezing over. Please heat them up.");
@@ -630,15 +630,15 @@ void Display()
     Controller1.rumble(".");
   }
   else if (colorScore >= 20) {
-    Controller1.Screen.print("You should probably cool down ur motors");
+    Controller1.Screen.print("You should probably cool down your motors lol");
     Controller1.rumble("-");
   }
   else if (colorScore >= 28) {
-    Controller1.Screen.print("MOTORS OVERHEATING: COOL THEM DOWN ASAP");
+    Controller1.Screen.print("MOTORS OVERHEATING; COOL THEM DOWN ASAP");
     Controller1.rumble("- - - - - - -");
   }
   else if (colorScore > 32) {
-    Controller1.Screen.print("YOUR MOTORS ARE SPONTANIOUSLY COMBUSTING: SHUT DOWN YOUR ROBOT IMMEDIATELY");
+    Controller1.Screen.print("YOUR MOTORS ARE SPONTANIOUSLY COMBUSTING; SHUT DOWN YOUR ROBOT IMMEDIATELY");
     Controller1.rumble("...---... ...---... ...---... ...---...");
   }
   else if (colorScore > 36) {
@@ -750,7 +750,7 @@ void autonomous(void) {
     case 3:
       inchDrive(-5);
       scraper.set(!scraper.value());
-      inchDrive(20);
+      inchDrive(30);
       scraper.set(!scraper.value());
       break;
 
@@ -811,15 +811,22 @@ void autonomous(void) {
       inchDrive(36);
     break;
 
-    //MARK: Drive Forward
+    //MARK: Drive Forward (Helper for Solo AWP)
     case 5:
-      wait(13, sec);
-      inchDrive(20, 1000);
+      inchDrive(3, 1000);
       break;
 
-    //MARK: Elimination Right Match
+    //MARK: xx.xx
     case 6:
-      intake.spin(fwd, 100000, rpm);
+      break;
+
+    //MARK: xx.xx
+    case 7:
+      break;
+
+    //MARK: Eliminations Right Match
+    case 8:
+    intake.spin(fwd, 100000, rpm);
       inchDrive(43);
       turnHeading(90);
       scraper.set(!(scraper.value()));
@@ -844,14 +851,6 @@ void autonomous(void) {
       inchDrive(5);
       turnHeading(90);
       inchDrive(25);
-      break;
-
-    //MARK: xx.xx
-    case 7:
-      break;
-
-    //MARK: xx.xx
-    case 8:
       break;
 
     //MARK: Elimination Left Match

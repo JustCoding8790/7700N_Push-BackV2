@@ -18,7 +18,7 @@
 // Essentials
 using namespace vex;
 // auton selector
-int autonSelected = 2;
+int autonSelected = 3;
 int autonMin = 0;
 int autonMax = 9;
 bool selectPressed = false;

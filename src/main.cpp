@@ -18,7 +18,7 @@
 // Essentials
 using namespace vex;
 // auton selector
-int autonSelected = 1;
+int autonSelected = 2;
 int autonMin = 0;
 int autonMax = 9;
 bool selectPressed = false;
@@ -663,6 +663,7 @@ void pre_auton(void) {
 void autonomous(void) {
   switch (autonSelected) {
     case 0: {
+
       // Testing Auton
       printf("GO! - Rotation: %0.2f", inertialSensor.rotation(deg));
       turnHeading(90);
@@ -733,13 +734,14 @@ void autonomous(void) {
       topStage.stop();
       inchDrive(18);
       turnHeading(225);
-      inchDrive(30);
+      inchDrive(48);
       //wait(0.5, sec);
-      //turnHeading(-40);
-      inchDrive(9);
+      turnHeading(210);
+      inchDrive(12);
       //intake.spin(fwd, 100000, rpm);
       //wait(0.2, sec);
-      topStage.spin(fwd, 10000, rpm);
+      intake.spin(fwd, -100000, rpm);
+      topStage.spin(fwd, -450, rpm);
       wait(0.1, sec);
       //topStage.spin(fwd, -10000, rpm);
       break;
@@ -952,7 +954,7 @@ void usercontrol(void) {
     }
     else if (Controller1.ButtonL1.pressing()) {
       // Mid goal score
-      topStage.spin(fwd, 200, rpm);
+      topStage.spin(fwd, 100, rpm);
       intake.spin(fwd, 1000, rpm);
     }
     else if (Controller1.ButtonR2.pressing()) {

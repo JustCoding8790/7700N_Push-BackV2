@@ -813,7 +813,7 @@ void autonomous(void) {
 
     //MARK: Drive Forward (Helper for Solo AWP)
     case 5:
-      inchDrive(3, 1000);
+      inchDrive(3);
       break;
 
     //MARK: xx.xx

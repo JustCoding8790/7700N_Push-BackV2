@@ -751,6 +751,7 @@ void autonomous(void) {
       inchDrive(-5);
       scraper.set(!scraper.value());
       inchDrive(20);
+      scraper.set(!scraper.value());
       break;
 
     //MARK: Regular Skills

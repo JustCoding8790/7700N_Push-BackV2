@@ -746,9 +746,8 @@ void autonomous(void) {
       //topStage.spin(fwd, -10000, rpm);
       break;
 
-    //MARK: Simple Skills
+    //MARK: Skills Parking
     case 3:
-      //MARK: Skills Parking
       inchDrive(-5);
       driveTrainMove(10000);
       wait(1, sec);

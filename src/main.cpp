@@ -18,7 +18,7 @@
 // Essentials
 using namespace vex;
 // auton selector
-int autonSelected = 3;
+int autonSelected = 1;
 int autonMin = 0;
 int autonMax = 9;
 bool selectPressed = false;
@@ -698,7 +698,7 @@ void autonomous(void) {
       topStage.spin(fwd, 450, rpm);
       wait(1, sec);
       topStage.stop();
-      inchDrive(18);
+      inchDrive(20);
       turnHeading(-225);
       inchDrive(48);
       //wait(0.5, sec);
@@ -706,7 +706,7 @@ void autonomous(void) {
       inchDrive(-9);
       //intake.spin(fwd, 100000, rpm);
       //wait(0.2, sec);
-      topStage.spin(fwd, 10000, rpm);
+      topStage.spin(fwd, 100, rpm);
       wait(0.1, sec);
       //topStage.spin(fwd, -10000, rpm);
       break;
@@ -748,10 +748,15 @@ void autonomous(void) {
 
     //MARK: Skills Parking
     case 3:
-      inchDrive(-5);
+      intake.spin(fwd, 10000, rpm);
+      inchDrive(-3);
       scraper.set(!scraper.value());
-      inchDrive(30);
+      wait(0.5, sec);
+      inchDrive(45);
       scraper.set(!scraper.value());
+      wait(0.5, sec);
+      intake.spin(fwd, 10000, rpm);
+      topStage.spin(fwd, 10000, rpm);
       break;
 
     //MARK: Regular Skills
